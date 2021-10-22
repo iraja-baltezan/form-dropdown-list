@@ -159,7 +159,7 @@
     </p>
 <form action="">
     <script type="text/template" id="ibj-frm-prods__opt-template">
-        <a class="ibj-frm-prods__opt" data-opt-idx="{{optIdx}}" href="#ibj-frm-prods__opts-open-btn">
+        <a class="ibj-frm-prods__opt" data-idx="{{idx}}" href="#ibj-frm-prods__opts-open-btn">
             <span class="ibj-frm-prods__opt-model">{{model}}</span>
             <span class="ibj-frm-prods__opt-pump">{{pump}}</span>
             <span class="ibj-frm-prods__opt-pipe">{{pipe}}</span>
@@ -177,19 +177,43 @@
     </div>
 
     <div class="ibj-frm-prods__quote">
-        <script type="text/template" id="ibj-frm-prods__quote-items-template">
-            <li class="ibj-frm-prods__quote-item">
+        <script type="text/template" id="ibj-frm-prods__quote-item-template">
+            <li class="ibj-frm-prods__quote-item" data-idx="{{idx}}">
                 <span class="ibj-frm-prods__quote-item-model">{{model}}</span>
                 <span class="ibj-frm-prods__quote-item-pump">{{pump}}</span>
                 <span class="ibj-frm-prods__quote-item-pipe">{{pipe}}</span>
-                <input class="ibj-frm-prods__quote-item-qty" type="number" min="1" value="1"/>
-                <span class="ibj-frm-prods__quote-item-del-btn"></span>
+                <input class="ibj-frm-prods__quote-item-qty" type="number" min="1" value="{{qty}}"/>
+                <span class="ibj-frm-prods__quote-item-del-btn">x</span>
             </li>
         </script>
-        <div class="ibj-frm-prods__quote-list">
+        <ul class="ibj-frm-prods__quote-list"></ul>
 
-        </div>
-        <textarea name="" id="" cols="30" rows="10" class="ibj-frm-prods__quote-input"></textarea>
+        <script type="text/template" id="ibj-frm-prods__quote-th-template">
+            <table border="0" cellspacing="0" cellpadding="6" >
+                <tr>
+                    <td><h4 style="margin:0;padding: 0;">MODELO</h4></td>
+                    <td><h4 style="margin:0;padding: 0;">QUANTIDADE</h4></td>
+                </tr>
+                <tr><td colspan="2" style="padding:0;"><hr noshade="noshade" size="1" style="margin: 0;"></td></tr>
+        </script>
+        <script type="text/template" id="ibj-frm-prods__quote-tr-template">
+            <tr>
+                <td>
+                    <big style="font-size: 1.4em;">PLUS-14</big>
+                    <div style="padding-left: 1.5em ;font-size:0.8em">
+                        <div>P-15/3-K   6,0 cv</div>
+                        <div>SUC 1½”   REC 1½”</div>
+                    </div>
+                </td>
+                <td style="font-size:2em;text-align: center;">1</td>
+            </tr>
+            <tr><td colspan="2" style="padding:0;"><hr noshade="noshade" size="1" style="margin: 0;"></td></tr>
+        </script>
+        <script type="text/template" id="ibj-frm-prods__quote-tf-template">
+            </table>
+        </script>
+        <textarea name="" id="" cols="30" rows="10" class="ibj-frm-prods__quote-input">
+        </textarea>
     </div>
 
 </form>
@@ -230,29 +254,90 @@
                 ['PLUS-13', 'P-15/2-N   5,0 cv',    'SUC 1½”   REC 1½”'  ],
                 ['PLUS-14', 'P-15/3-K   6,0 cv',    'SUC 1½”   REC 1½”'  ],
             ]
-            var elmProductsSelectedText  = document.getElementsByClassName('ibj-frm-prods__quote-text')[0]
-            var elmProductsOpts       = document.getElementsByClassName('ibj-frm-prods__opts')[0]
-            var optTemplateStr = document.getElementById("ibj-frm-prods__opt-template").innerText
 
-            function productsModelSelectAddOpts(optsArray){
+            var htmlProductsQuoteInput  = document.getElementsByClassName('ibj-frm-prods__quote-input')[0]
+            var htmlProductsOpts        = document.getElementsByClassName('ibj-frm-prods__opts')[0]
+            var optTemplate             = document.getElementById("ibj-frm-prods__opt-template").innerText
+            var quoteItemTemplate       = document.getElementById("ibj-frm-prods__quote-item-template").innerText
+            var htmlProductsQuoteList   = document.getElementsByClassName('ibj-frm-prods__quote-list')[0]
+
+            var quoteItemsQuantityArray = []
+
+            function productsModelSelectAddOpts(){
                 var bufferOpts = ''
                 var bufferOpt = ''
-                for(var i=0; i < optsArray.length; i++){
-                    bufferOpt = optTemplateStr
-                        .replace('{{optIdx}}', i)
-                        .replace('{{model}}', optsArray[i][0])
-                        .replace('{{pump}}', optsArray[i][1])
-                        .replace('{{pipe}}', optsArray[i][2])
+                for(var i=0; i < productsArray.length; i++){
+                    bufferOpt = optTemplate
+                        .replace('{{idx}}', i)
+                        .replace('{{model}}', productsArray[i][0])
+                        .replace('{{pump}}', productsArray[i][1])
+                        .replace('{{pipe}}', productsArray[i][2])
                     bufferOpts += bufferOpt
                 }
-                console.log(bufferOpts)
-                elmProductsOpts.innerHTML = bufferOpts
+                htmlProductsOpts.innerHTML = bufferOpts
             }
 
-            productsModelSelectAddOpts(productsArray)
+            function quoteAddItem(itemIndex){
+                if (quoteItemsQuantityArray[itemIndex] > 0){
+                    quoteItemsQuantityArray[itemIndex]++ // console.log('Item já existe')
+                }
+                else {
+                    quoteItemsQuantityArray[itemIndex]=1 // console.log('Item não existe')
+                }
+                quoteListUpdate(quoteItemsQuantityArray, productsArray)
+            }
+
+            function quoteListUpdate(quoteItemsQuantityArray){
+                var bufferQuoteList = ''
+                var bufferQuoteItem = ''
+                for (var i=0; i < quoteItemsQuantityArray.length; i++){
+                    if (quoteItemsQuantityArray[i] > 0) {
+                        bufferQuoteItem = quoteItemTemplate
+                        .replace('{{idx}}', i)
+                        .replace('{{model}}', productsArray[i][0])
+                        .replace('{{pump}}', productsArray[i][1])
+                        .replace('{{pipe}}', productsArray[i][2])
+                        .replace('{{qty}}', quoteItemsQuantityArray[i])
+                        bufferQuoteList += bufferQuoteItem
+                    }
+                }
+                htmlProductsQuoteList.innerHTML = bufferQuoteList
+            }
+
+            htmlProductsOpts.addEventListener("click", function(event){
+                var idx = event.target.dataset.idx
+                if (!idx){
+                    idx = event.target.parentElement.dataset.idx
+                }
+                quoteAddItem(idx)
+            })
+
+            productsModelSelectAddOpts()
         })()
     });
     </script>
+
+
+
+
+<table border="0" cellspacing="0" cellpadding="6" >
+    <tr>
+        <td><b>MODELO</b></td>
+        <td><b>QUANTIDADE</b></td>
+    </tr>
+    <tr><td colspan="2" style="padding:0;"><hr noshade="noshade" size="1" style="margin: 0;"></td></tr>
+    <tr>
+        <td>
+            <big style="font-size: 1.4em;">PLUS-14</big>
+            <div style="padding-left: 1.5em ;font-size:0.8em">
+                <div>P-15/3-K   6,0 cv</div>
+                <div>SUC 1½”   REC 1½”</div>
+            </div>
+        </td>
+        <td style="font-size:2em;text-align: center;">1</td>
+    </tr>
+    <tr><td colspan="2" style="padding:0;"><hr noshade="noshade" size="1" style="margin: 0;"></td></tr>
+</table>
 
 </body>
 </html>
