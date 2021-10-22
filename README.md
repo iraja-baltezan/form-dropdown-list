@@ -1,2 +1,4 @@
 # form-dropdown-list
-Pedaço de código em HTML, CSS e JS para substituir um textarea de um formulário de cotação de preços.
+
+Piece of code to replace a textarea element from a contact form.
+Using HTML, CSS and Vanilla JS (not in its best form).
