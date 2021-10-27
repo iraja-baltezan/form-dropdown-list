@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+:root {
+    --ib-frm-bg: hsl(220deg 15% 95%);
+    --ib-frm-border: 1px solid rgba(0 0 0/15%);
+    --ib-frm-fg: rgba(0 0 0/85%);
+
+    --ib-frm-ctrl-bg: #fff;
+    --ib-frm-ctrl-border: 1px solid rgba(0 0 0/15%);
+    --ib-frm-ctrl-fg:rgba(0 0 0/85%);
+    --ib-frm-ctrl-focus:rgba(0 0 0/15%);
+    --ib-frm-ctrl-shadow: 0 2px 8px rgba(0 0 0/25%);
+
+    --ib-frm-btn-default-bg: hsl(220deg 50% 80%);
+    --ib-frm-btn-default-border: none;
+    --ib-frm-btn-default-shadow: 0 2px 8px rgba(0 0 0/25%);
+
+
+    --ib-svg-arrow-dropdown: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+    --ib-svg-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/%3E%3C/svg%3E");
+    --ib-svg-minus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M19 13H5v-2h14v2z'/%3E%3C/svg%3E");
+}
+
+* {
+    box-sizing: border-box;
+}
+body {
+    /* background-color: #e7e9ef; */
+    background-color: var(--ib-frm-bg);
+    font-family: sans-serif;
+    max-width: 300px;
+    margin: auto;
+    font-size: 16px;
+}
+h1 {
+    font-weight: normal;
+}
+.menu {
+    position: relative;
+    max-width: 300px;
+    margin: 1em auto;
+    display: block;
+    -webkit-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+.menu-chkbox {
+    position: absolute;
+    width: 0;
+}
+.menu-chkbox:checked ~ .menu-opts {
+    height: 200px;
+    border: var(--ib-frm-ctrl-border);
+    box-shadow: var(--ib-frm-ctrl-shadow);
+}
+
+.menu__btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--ib-frm-btn-default-bg);
+    border: var(--ib-frm-btn-default-border);
+    box-shadow: var(--ib-frm-btn-default-shadow);
+    padding: 4px;
+}
+.menu__btn::after {
+    display: block;
+    content: "";
+    height: 24px;
+    width: 24px;
+    background-image: var(--ib-svg-arrow-dropdown);
+    opacity: 0.7;
+}
+.menu-opts {
+    position: absolute;
+    width: 100%;
+    max-height: 200px;
+    background-color: var(--ib-frm-ctrl-bg);
+    border:var(--ib-frm-ctrl-border);
+    border-width: 0px;
+    overflow: auto;
+    overflow-x: hidden;
+    transition: all 0.3s;
+    height: 0px;
+}
+
+.menu-opt {
+    border-bottom: var(--ib-frm-ctrl-border);
+    padding: 4px;
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+}
+.menu-opt:hover {
+    background-color: var(--ib-frm-ctrl-focus);
+}
+
+.frm-textarea {
+    display: block;
+    width: 100%;
+}
+
+
+</style>
+</head>
+<body>
+
+    <h1>Menu drop-down</h1>
+
+    <p>Experimento com HTML, CSS e JavaScript, utilizando um "hack" conhecido, para ocultar e exibir uma lista como um menu drop-down.</p>
+
+    <p>Objetivos:</p>
+    <ul>
+        <li>Criar um menu drop-down semelhante a um input do tipo select.</li>
+        <li>Criar o menu somente se haja suporte do navegador ao elemento template.</li>
+        <li>Cada opção do menu pode conter mais elementos filhos com estilos de apresentação diversos.</li>
+        <li>Não usar javascript para a apresentação da lista.</li>
+        <li>Usar JavaScript somente para gravar as opções selecionadas em um input do tipo hidden e (ou) outro elemento do documento HTML.</li>
+    </ul>
+
+    <h2>Menu exemplo</h2>
+
+
+    <textarea class="frm-textarea" name="" id="" cols="30" rows="10"></textarea>
+
+    <h3>Lorem ipsum</h3>
+
+    <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum amet similique, sunt quaerat voluptas enim quos! Ab recusandae eveniet dolores minus et quam fugiat, repellat quo architecto delectus, similique inventore.
+    </p>
+
+    <template id="template-menu-select">
+        <label class="menu">
+            <div class="menu__btn">
+                Selecione...
+            </div>
+
+            <input type="checkbox" name="menu" class="menu-chkbox">
+
+            <div class="menu-opts">
+            </div>
+        </label>
+    </template>
+    <template id="template-menu-options">
+        <div class="menu-opt">
+            <big></big>
+            <em></em>
+            <small></small>
+        </div>
+    </template>
+
+    <script>
+        function menuCheckboxMain(){
+            // Test to see if the browser supports the HTML template element by checking
+            // for the presence of the template element's content attribute.
+            if (!('content' in document.createElement('template'))) return;
+
+            // Gets the templates and textarea element references
+            var tplMenuSel = document.getElementById('template-menu-select')
+            var tplMenuOpt = document.getElementById('template-menu-options')
+            var elmFrmTextArea = document.getElementsByClassName('frm-textarea')[0]
+
+            // On clicking an option...
+            function onClickMenuOpt(event){
+                var optTarget = event.currentTarget
+                var idx = optTarget.dataset.idx
+                elmFrmTextArea.textContent += `Option ${idx} selecionada\n`
+            }
+
+            // Get template for menu select
+            var cloneMenuSel = tplMenuSel.content.firstElementChild.cloneNode(true)
+            // console.log(tplMenuSel.content.firstElementChild)
+
+            // Insert menu before textarea
+            var elmMenuSel = elmFrmTextArea.parentElement.insertBefore(cloneMenuSel, elmFrmTextArea)
+
+            // Get the container for options of menu
+            var elmMenuOpts = elmMenuSel.getElementsByClassName('menu-opts')[0]
+            // console.log(elmMenuOpts)
+
+            // Populate menu options
+            var cloneMenuOpt = tplMenuOpt.content.firstElementChild
+
+            for (var i=0; i<30; i++){
+                var opt = cloneMenuOpt.cloneNode(true)
+                opt.addEventListener('click', onClickMenuOpt, false)
+                opt.dataset.idx = i
+                opt.querySelector('big').innerText = 'Opção '+ i
+                opt.querySelector('em').innerText = 'Linha 2 Opção '+ i
+                opt.querySelector('small').innerText = 'Linha 3 Opção '+ i
+                elmMenuOpts.appendChild(opt)
+            }
+
+
+        }
+        document.addEventListener('DOMContentLoaded', menuCheckboxMain)
+    </script>
+
+</body>
+</html>

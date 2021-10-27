@@ -4,105 +4,751 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dropdown Menu HTML/CSS/JS</title>
+    <style>
 
-    <link rel="stylesheet" href="index.css">
+:root {
+    --ib-frm-bg-color: hsl(220deg 15% 85%);
+    --ib-frm-border-color: rgba(0 0 0/15%);
+    --ib-frm-fg-color: rgba(0 0 0/85%);
 
+    --ib-frm-focus-bg-color: hsl(220deg 20% 90%);
+
+    --ib-frm-inp-border-radius: 4px;
+    --ib-frm-inp-text-bg-color: #fff;
+    --ib-frm-inp-text-border-color: rgba(0 0 0/20%);
+    --ib-frm-inp-text-color:rgba(0 0 0/85%);
+    --ib-frm-inp-text-shadow: 0 2px 8px rgba(0 0 0/25%);
+    --ib-frm-inp-text-focus-color: #fff;
+    --ib-frm-inp-text-focus-bg-color: hsl(220deg 75% 60%);
+    --ib-frm-inp-text-focus-border-color: hsl(220deg 75% 40%);
+
+    --ib-frm-btn-default-bg: hsl(220deg 80% 60%);
+    --ib-frm-btn-default-hover-bg-color: hsl(220deg 90% 50%);
+    --ib-frm-btn-default-border: none;
+    --ib-frm-btn-default-shadow: 0 2px 8px rgba(0 0 0/25%);
+    --ib-frm-btn-default-color: #fff;
+
+    --ib-frm-btn-success-bg: hsl(220deg 70% 50%);
+    --ib-frm-btn-success-fg: #fff;
+    --ib-frm-btn-warning-bg: hsl(30deg 70% 50%);
+    --ib-frm-btn-warning-fg: #fff;
+
+
+    --ib-svg-arrow-dropdown: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+
+    --ib-svg-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 0 24 24' width='24px' fill='%23000000'%3E%3Cpath d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/%3E%3C/svg%3E");
+
+    --ib-svg-minus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'%3E%3Cpath d='M19 13H5v-2h14v2z'/%3E%3C/svg%3E");
+
+    --ib-svg-warn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'%3E%3Cpath d='M12 5.99L19.53 19H4.47L12 5.99M2.74 18c-.77 1.33.19 3 1.73 3h15.06c1.54 0 2.5-1.67 1.73-3L13.73 4.99c-.77-1.33-2.69-1.33-3.46 0L2.74 18zM11 11v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zm0 5h2v2h-2z'/%3E%3C/svg%3E");
+}
+
+* {
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    /* background-color: #e7e9ef; */
+    background-color: var(--ib-frm-bg-color);
+    font-family: sans-serif;
+    max-width: 300px;
+    margin: auto;
+    font-size: 16px;
+}
+h1 {
+    font-weight: normal;
+}
+.ib-frm-prod__select {
+    position: relative;
+    max-width: 300px;
+    margin: 1em auto;
+    display: block;
+    -webkit-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+.ib-frm-prod__select-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--ib-frm-btn-default-bg);
+    border: var(--ib-frm-btn-default-border);
+    box-shadow: var(--ib-frm-btn-default-shadow);
+    padding: 4px 4px 4px 8px;
+    width: 100%;
+    border-radius: var(--ib-frm-inp-border-radius);
+    color: var(--ib-frm-btn-default-color);
+}
+.ib-frm-prod__select-btn:hover {
+    background-color: var(--ib-frm-btn-default-hover-bg-color);
+}
+.ib-frm-prod__select-btn::after {
+    display: block;
+    content: "";
+    height: 24px;
+    width: 24px;
+    background-image: var(--ib-svg-plus);
+    opacity: 0.7;
+    color: var(--ib-frm-btn-default-color);
+    filter: invert();
+}
+
+
+/* Product options */
+
+.ib-frm-prod__select-opts {
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+    max-height: 200px;
+    background-color: var(--ib-frm-inp-text-bg-color);
+    border: 1px solid var(--ib-frm-inp-text-border-color);
+    border-width: 0px;
+    overflow: auto;
+    overflow-x: hidden;
+    transition: all 0.2s;
+    height: 0px;
+}
+.ib-frm-prod__select--open .ib-frm-prod__select-opts {
+    height: 200px;
+    border: 1px solid var(--ib-frm-inp-text-border-color);
+    box-shadow: var(--ib-frm-inp-text-shadow);
+}
+
+
+/* Product option to select */
+
+.ib-frm-prod__select-opt {
+    display: grid;
+    grid-template-columns:45% auto;
+    grid-template-rows: 17px 17px;
+    border: none;
+    border-bottom:1px solid  var(--ib-frm-inp-text-border-color);
+    padding: 4px;
+    margin: 0;
+    width: 100%;
+    transition: all 0.25s;
+    text-align: left;
+}
+/* “Lord Vader Hates Furry Animals”  */
+.ib-frm-prod__select-opt:hover,
+.ib-frm-prod__select-opt:focus,
+.ib-frm-prod__select-opt:focus-visible,
+.ib-frm-prod__select-opt:active {
+    color: var(--ib-frm-inp-text-focus-color);
+    background-color: var(--ib-frm-inp-text-focus-bg-color);
+    outline: 1px solid var(--ib-frm-inp-text-focus-border-color);
+}
+.ib-frm-prod__select-opt-model {
+    font-size:24px;
+    grid-column: 1/2;
+    grid-row: 1/3;
+    align-self: center;
+    padding-left: 4px;
+}
+.ib-frm-prod__select-opt-pump {
+    font-size: 12px;
+    grid-column: 2/3;
+    grid-row: 1/2;
+    align-self: end;
+}
+.ib-frm-prod__select-opt-pipe {
+    font-size: 12px;
+    grid-column: 2/3;
+    grid-row: 2/3;
+    align-self: start;
+}
+
+/* List of chosen products */
+
+.ib-frm-prod__chosen {
+    margin-top: 1em;
+    background-color: var(--ib-frm-inp-text-bg-color);
+    border: 1px solid var(--ib-frm-inp-text-border-color);
+    border-radius: var(--ib-frm-inp-border-radius);
+    padding: 0 8px;
+    font-size: 14px;
+}
+.ib-frm-prod__chosen-header {
+    display: grid;
+    grid-template-columns: auto 128px;
+    padding: 8px 0;
+}
+.ib-frm-prod__chosen-header span:nth-last-child(1){
+    text-align: center;
+}
+.ib-frm-prod__chosen-msg {
+    border-top: 1px solid var(--ib-frm-inp-text-border-color);
+    color: var(--ib-frm-inp-text-color);
+    text-align: center;
+    padding: 16px;
+    display: none;
+}
+.ib-frm-prod__chosen--empty .ib-frm-prod__chosen-msg {
+    display: block;
+}
+
+.ib-frm-prod__chosen--empty .ib-frm-prod__chosen-body {
+    display: none;
+}
+
+.ib-frm-prod-chosen__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.ib-frm-prod-chosen__item {
+    position: relative;
+    border-top: 1px solid var(--ib-frm-inp-text-border-color);
+    margin: 0;
+    padding: 8px 0;
+    display: grid;
+    grid-template-columns: auto 32px 64px 32px;
+    grid-template-rows: auto auto auto;
+    font-size: 16px;
+}
+.ib-frm-prod-chosen-item__name {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    font-size: 1.2em;
+}
+.ib-frm-prod-chosen-item__desc {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    font-size: 0.8em;
+    align-self: end;
+    color: var(--ib-frm-inp-text-color);
+}
+
+.ib-frm-prod-chosen-item__qty {
+    grid-column: 3/4;
+    grid-row: 1/3;
+    font-size: 1.5em;
+    text-align: center;
+    align-self: center;
+}
+.ib-frm-prod-chosen-item__qty u {
+    display: block;
+    text-decoration: none;
+    font-size: 0.3em;
+}
+
+.ib-frm-prod-chosen__item input:hover {
+    opacity: 1;
+}
+.ib-frm-prod-chosen-item__qty-plus,
+.ib-frm-prod-chosen-item__qty-minus {
+    display: inline-block;
+    align-self: center;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--ib-frm-inp-text-border-color);
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.5;
+    color: rgba(0 0 0/0);
+}
+.ib-frm-prod-chosen-item__qty-minus {
+    background-image: var(--ib-svg-minus);
+    grid-column: 2/3;
+    grid-row: 1/3
+}
+.ib-frm-prod-chosen-item__qty-plus {
+    background-image: var(--ib-svg-plus);
+    grid-column: 4/5;
+    grid-row: 1/3
+}
+
+/* Confirm item delete */
+.ib-frm-prod-chosen__item--del {
+    background-color: var(--ib-frm-focus-bg-color);
+    margin: 0 -8px;
+    border-bottom: 1px solid var(--ib-frm-inp-text-border-color);
+    padding: 8px;
+}
+.ib-frm-prod-chosen__item--del .ib-frm-prod-chosen-del-confirm {
+    height: auto;
+    margin: 8px 0 0;
+    padding: 16px 8px 8px;
+}
+.ib-frm-prod-chosen-del-confirm {
+    height: 0;
+    grid-column: 1/5;
+    grid-row: 3/4;
+    margin: 0;
+    padding: 0;
+    color: var(--ib-frm-inp-text-color);
+    border-top: 1px dashed var(--ib-frm-inp-text-border-color);
+    transition: all 0.3s;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    overflow: hidden;
+}
+.ib-frm-prod-chosen-del-confirm::before{
+    content: "";
+    display: block;
+    grid-column: 1/2;
+    grid-row: 1/3;
+    background-image: var(--ib-svg-warn);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 80px;
+    width: 80px;
+    margin: 0px 8px 0px -6px;
+    filter:  invert(53%) sepia(92%) saturate(409%) hue-rotate(349deg) brightness(88%) contrast(92%);
+
+;
+}
+.ib-frm-prod-chosen-del-confirm__label {
+    grid-column: 2/4;
+    grid-row: 1/2;
+    margin-bottom: 8px;
+    /* font-weight: bold; */
+}
+.ib-frm-prod-chosen-del-confirm__yes{
+    grid-column: 2/3;
+    grid-row: 2/3;
+    background-color: var(--ib-frm-btn-warning-bg);
+    color: var(--ib-frm-btn-warning-fg);
+    justify-self: start;
+}
+.ib-frm-prod-chosen-del-confirm__no {
+    grid-column: 3/4;
+    grid-row: 2/3;
+    color: var(--ib-frm-btn-success-fg);
+    background-color: var(--ib-frm-btn-success-bg);
+}
+.ib-frm-prod-chosen-del-confirm__no,
+.ib-frm-prod-chosen-del-confirm__yes {
+    border: 1px solid rgba(255 255 255/45%);
+    border-radius: var(--ib-frm-inp-border-radius);
+    padding: 4px 8px;
+    box-shadow: var(--ib-frm-btn-default-shadow);
+}
+
+
+/* Control to be replaced by the select menu */
+
+.ib-frm-prod__textarea {
+    display: block;
+    width: 100%;
+}
+
+
+
+
+</style>
 </head>
 <body>
+
+    <h1>Menu drop-down</h1>
+
     <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum amet similique, sunt quaerat voluptas enim quos! Ab recusandae eveniet dolores minus et quam fugiat, repellat quo architecto delectus, similique inventore.
+        Pedaço de código HTML, CSS e JavaScript para ocultar e exibir uma lista como um menu drop-down.
+    </p>
+    <p>
+        O item selecionado é inserido em um lista visível e também um elemento input do tipo hidden ou o próprio elemento textarea, que será oculto, de um formulário.
+    </p>
+    <p>
+        A intenção é usar este código em um site com um editor de formulários que permite a inserção de HTML, CSS.
     </p>
 
-    <form action="">
-        <script type="text/template" id="ibj-frm-prods__opt-template">
-            <a class="ibj-frm-prods__opt" data-idx="{{idx}}" href="#ibj-frm-prods__opts-open-btn">
-                <span class="ibj-frm-prods__opt-model">{{model}}</span>
-                <span class="ibj-frm-prods__opt-pump">{{pump}}</span>
-                <span class="ibj-frm-prods__opt-pipe">{{pipe}}</span>
-            </a>
-        </script>
+    <p>Objetivos:</p>
+    <ul>
+        <li>Criar um menu drop-down semelhante a um input do tipo select.</li>
+        <li>
+            Se o navegador suporta o elemento HTML template:
+            <ul>
+                <li>O elemento textarea será oculto.</li>
+                <li>O elemento textarea (ou um input hidden) conterá o código de uma tabela html com os itens escolhidos.</li>
+                <li><strong>O código da tabela será limitado ao que é suportado pelos clientes de e-mail.</strong></li>
+                <li>Um botão para abertura e fechamento do menu de opções será inserido na posição onde o textarea estava visível.</li>
+                <li>Um quadro representando a lista dos escolhidos será inserido abaixo do botão de controle do menu.</li>
+                <li>Clicar em uma opção do menu insere a opção na lista dos escolhidos.</li>
+                <li>A cada inserção de um item, este tem a quantidade incrementada em 1 unidade</li>
+                <li>Cada item inserido contém os botões + e - para alterar quantidade do item.</li>
+                <li>Remover item da lista se a quantidade for 1 e o botão "-" for pressionado.</li>
+                <li>Os menu deve respoder a eventos de teclado como um controle select.</li>
+            </ul>
+        </li>
+        <li>Se o navegador não suporta o elemento HTML template, então o textarea fica visível e o usuário altera seu texto manualmente.</li>
+        <li>Cada opção do menu pode conter mais elementos filhos com estilos de apresentação diversos.</li>
+    </ul>
 
-        <div class="ibj-frm-prods__sel">
-            <a class="ibj-frm-prods__opts-open-btn" id="ibj-frm-prods__opts-open-btn" href="#ibj-frm-prods__opts-popup">Selecionar e incluir um modelo na lista...</a>
-            <div class="ibj-frm-prods__opts-popup" id="ibj-frm-prods__opts-popup">
-                <a class="ibj-frm-prods__opts-close-btn" href="#ibj-frm-prods__opts-open-btn"></a>
-                <div class="ibj-frm-prods__opts-border">
-                    <div class="ibj-frm-prods__opts"></div>
+    <h2>Menu exemplo</h2>
+
+    <!--
+        This textarea will be hidden if browser has support to HTML template.
+        The drop-down menu with the list of chosen items will be inserted here.
+    -->
+    <textarea class="ib-frm-prod__textarea" name="" id="" cols="30" rows="10"></textarea>
+
+
+    <template id="ib-frm-prod__select-tpl">
+        <div class="ib-frm-prod__select">
+            <button class="ib-frm-prod__select-btn">
+                Adicionar itens na cotação...
+            </button>
+
+            <div class="ib-frm-prod__select-opts"></div>
+
+            <div class="ib-frm-prod__chosen">
+                <div class="ib-frm-prod__chosen-header"><span>Modelo</span><span>Quantidade</span></div>
+                <div class="ib-frm-prod__chosen-msg">
+                    Toque no botão "Adicionar itens na cotação" para adicionar itens à sua cotação.
+                </div>
+                <div class="ib-frm-prod__chosen-body">
+                    <ul class="ib-frm-prod-chosen__list">
+                        <!--
+                        <li class="ib-frm-prod-chosen__item">
+                            <span class="ib-frm-prod-chosen-item__name">PLUS-14</span>
+                            <span class="ib-frm-prod-chosen-item__desc">P-15/3-K   6,0 cv<br>SUC 1½”   REC 1½”</span>
+                            <span class="ib-frm-prod-chosen-item__qty">1<u>UNIDADE</u></span>
+                            <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
+                            <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
+                        </li>
+                        <li class="ib-frm-prod-chosen__item">
+                            <span class="ib-frm-prod-chosen-item__name">PLUS-14</span>
+                            <span class="ib-frm-prod-chosen-item__desc">P-15/3-K   6,0 cv<br>SUC 1½”   REC 1½”</span>
+                            <span class="ib-frm-prod-chosen-item__qty">99<u>UNIDADES</u></span>
+                            <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
+                            <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
+                            <div class="ib-frm-prod-chosen-del-confirm">
+                                <div class="ib-frm-prod-chosen-del-confirm__label">Excluir este item da cotação?</div>
+                                <input class="ib-frm-prod-chosen-del-confirm__yes" type="button" value="Excluir">
+                                <input class="ib-frm-prod-chosen-del-confirm__no" type="button" value="Manter">
+                            </div>
+                        </li>
+                        <li class="ib-frm-prod-chosen__item">
+                            <span class="ib-frm-prod-chosen-item__name">PLUS-14</span>
+                            <span class="ib-frm-prod-chosen-item__desc">P-15/3-K   6,0 cv<br>SUC 1½”   REC 1½”</span>
+                            <span class="ib-frm-prod-chosen-item__qty">99<u>UNIDADES</u></span>
+                            <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
+                            <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
+                        </li>
+                        <li class="ib-frm-prod-chosen__item">
+                            <span class="ib-frm-prod-chosen-item__name">PLUS-14</span>
+                            <span class="ib-frm-prod-chosen-item__desc">P-15/3-K   6,0 cv<br>SUC 1½”   REC 1½”</span>
+                            <span class="ib-frm-prod-chosen-item__qty">99<u>UNIDADES</u></span>
+                            <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
+                            <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
+                        </li>
+                        -->
+                    </ul>
                 </div>
             </div>
         </div>
+    </template>
+    <template id="ib-frm-prod__select-opt-tpl">
+        <button class="ib-frm-prod__select-opt">
+            <span class="ib-frm-prod__select-opt-model"></span>
+            <span class="ib-frm-prod__select-opt-pump"></span>
+            <span class="ib-frm-prod__select-opt-pipe"></span>
+        </button>
+    </template>
+    <template id="ib-frm-prod__chosen-item-tpl">
+        <li class="ib-frm-prod-chosen__item">
+            <span class="ib-frm-prod-chosen-item__name"></span>
+            <span class="ib-frm-prod-chosen-item__desc"></span>
+            <span class="ib-frm-prod-chosen-item__qty"></span>
+            <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
+            <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
+        </li>
+    </template>
 
-        <div class="ibj-frm-prods__quote">
-            <script type="text/template" id="ibj-frm-prods__quote-item-template">
-                <li class="ibj-frm-prods__quote-item" data-idx="{{idx}}">
-                    <span class="ibj-frm-prods__quote-item-model">{{model}}</span>
-                    <span class="ibj-frm-prods__quote-item-pump">{{pump}}</span>
-                    <span class="ibj-frm-prods__quote-item-pipe">{{pipe}}</span>
-                    <input class="ibj-frm-prods__quote-item-qty" type="number" min="1" value="{{qty}}"/>
-                    <span class="ibj-frm-prods__quote-item-del-btn">x</span>
-                </li>
-            </script>
-            <ul class="ibj-frm-prods__quote-list"></ul>
-
-            <script type="text/template" id="ibj-frm-prods__quote-th-template">
-                <table border="0" cellspacing="0" cellpadding="6" >
-                    <tr>
-                        <td><h4 style="margin:0;padding: 0;">MODELO</h4></td>
-                        <td><h4 style="margin:0;padding: 0;">QUANTIDADE</h4></td>
-                    </tr>
-                    <tr><td colspan="2" style="padding:0;"><hr noshade="noshade" size="1" style="margin: 0;"></td></tr>
-            </script>
-            <script type="text/template" id="ibj-frm-prods__quote-tr-template">
+    <template id="ib-frm-prod__chosen-eml-tbl-tpl">
+        <table border="0" cellspacing="0" cellpadding="4" width="100%"  style="font-family:verdana,arial,helv,sans-serif;color:#444444;">
+            <thead>
                 <tr>
-                    <td>
-                        <big style="font-size: 1.4em;">PLUS-14</big>
-                        <div style="padding-left: 1.5em ;font-size:0.8em">
-                            <div>P-15/3-K   6,0 cv</div>
-                            <div>SUC 1½”   REC 1½”</div>
-                        </div>
-                    </td>
-                    <td style="font-size:2em;text-align: center;">1</td>
+                    <th align="left" width="64">Quantidade</th>
+                    <th align="left">Modelo</th>
                 </tr>
-                <tr><td colspan="2" style="padding:0;"><hr noshade="noshade" size="1" style="margin: 0;"></td></tr>
-            </script>
-            <script type="text/template" id="ibj-frm-prods__quote-tf-template">
-                </table>
-            </script>
-            <textarea name="" id="" cols="30" rows="10" class="ibj-frm-prods__quote-input">
-            </textarea>
-        </div>
+                <tr>
+                    <th colspan="2"><hr></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </template>
 
-    </form>
-
-
-    <table border="0" cellspacing="0" cellpadding="6" >
+    <template id="ib-frm-prod__chosen-eml-tbl-row-tpl">
         <tr>
-            <td><b>MODELO</b></td>
-            <td><b>QUANTIDADE</b></td>
-        </tr>
-        <tr><td colspan="2" style="padding:0;"><hr noshade="noshade" size="1" style="margin: 0;"></td></tr>
-        <tr>
+            <td align="center" style="font-size:24px;"></td>
             <td>
-                <big style="font-size: 1.4em;">PLUS-14</big>
-                <div style="padding-left: 1.5em ;font-size:0.8em">
-                    <div>P-15/3-K   6,0 cv</div>
-                    <div>SUC 1½”   REC 1½”</div>
-                </div>
+                <div style="font-size:18px;"></div>
+                <div style="font-size:14px;"></div>
             </td>
-            <td style="font-size:2em;text-align: center;">1</td>
         </tr>
-        <tr><td colspan="2" style="padding:0;"><hr noshade="noshade" size="1" style="margin: 0;"></td></tr>
-    </table>
+        <tr><th colspan="2"><hr></th></tr>
+    </template>
 
 
-<p>
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum amet similique, sunt quaerat voluptas enim quos! Ab recusandae eveniet dolores minus et quam fugiat, repellat quo architecto delectus, similique inventore.
+
+
+    <script>
+        // TODO Esc key hide options list
+        function ibFrmQuotaProdSelectMain(){
+            // Test to see if the browser supports the HTML template element by checking
+            // for the presence of the template element's content attribute.
+            if (!('content' in document.createElement('template'))) return;
+
+            var productsArray=[
+                ['KA-1',    'THS-18     3.0 cv',    'SUC 2”    REC 1½”'  ],
+                ['KA-2',    'THS-18     4.0 cv',    'SUC 2”    REC 1½”'  ],
+                ['KA-3',    'THS-18     5.0 cv',    'SUC 2”    REC 1½”'  ],
+                ['KA-4',    'THS-18     6.0 cv',    'SUC 2”    REC 1½”'  ],
+                ['KA-5',    'THS-18     7.5 cv',    'SUC 2”    REC 1½”'  ],
+                ['KA-6',    'THS-18    10.0 cv',    'SUC 2”    REC 1½”'  ],
+                ['KA-7',    'THS-18    12.5 cv',    'SUC 2”    REC 1½”'  ],
+                ['KA-8',    'THB-18    10.0 cv',    'SUC 3”    REC 2½”'  ],
+                ['KA-9',    'THB-18    12.5 cv',    'SUC 3”    REC 2½”'  ],
+                ['KA-10',   'THB-18    15.0 cv',    'SUC 3”    REC 2½”'  ],
+                ['KA-11',   'THB-18    20.0 cv',    'SUC 3”    REC 2½”'  ],
+                ['KA-26',   'TH-18      3,0 cv',    'SUC 2”    REC 2½”'  ],
+                ['KA-27',   'THS-18     5,0 cv',    'SUC 2”    REC 2½”'  ],
+                ['KA-28',   'THS-18     7,5 cv',    'SUC 2”    REC 2½”'  ],
+                ['KA-29',   'THS-18    10,0 cv',    'SUC 2”    REC 2½”'  ],
+                ['KR-1',    'B-12-NR    0,5 cv',    'SUC ¾”    REC ¾”'   ],
+                ['KR-2',    'TH-16-NR   1,0 cv',    'SUC 1”    REC 1”'   ],
+                ['KR-3',    'TH-16-NR   1,5 cv',    'SUC 1¼”   REC 1”'   ],
+                ['KR-4',    'TH-16-NR   2,0 cv',    'SUC 1¼”   REC 1”'   ],
+                ['KR-5',    'TH-16-NR   3,0 cv',    'SUC 1¼”   REC 1”'   ],
+                ['KR-6',    'THS-18-R   5,0 cv',    'SUC 2”    REC 1½”'  ],
+                ['KR-7',    'THS-18-R   7,5 cv',    'SUC 2”    REC 1½”'  ],
+                ['KR-8',    'THS-18-R  10,0 cv',    'SUC 2”    REC 1½”'  ],
+                ['PLUS-1',  'P-11/2     1,0 cv',    'SUC 1”    REC 1”'   ],
+                ['PLUS-2',  'P-11/3     1,5 cv',    'SUC 1”    REC 1”'   ],
+                ['PLUS-3',  'P-11/3     2,0 cv',    'SUC 1”    REC 1”'   ],
+                ['PLUS-4',  'P-11/4     3,0 cv',    'SUC 1”    REC 1”'   ],
+                ['PLUS-11', 'P-15/2-F   3,0 cv',    'SUC 1½”   REC 1½”'  ],
+                ['PLUS-12', 'P-15/2-K   4,0 cv',    'SUC 1½”   REC 1½”'  ],
+                ['PLUS-13', 'P-15/2-N   5,0 cv',    'SUC 1½”   REC 1½”'  ],
+                ['PLUS-14', 'P-15/3-K   6,0 cv',    'SUC 1½”   REC 1½”'  ],
+            ]
+
+
+            // Gets the templates and textarea element references
+            var tplSelect = document.getElementById('ib-frm-prod__select-tpl')
+            var tplSelectOpt = document.getElementById('ib-frm-prod__select-opt-tpl')
+
+            // Hidden textarea for chosen items, formatted as an html table
+            // suitable for email clients.
+            // When visible, the user manually edit the content of textarea
+            // and the menu controls are not created.
+            var elmFrmTextArea = document.querySelector('.ib-frm-prod__textarea')
+            elmFrmTextArea.style.display = 'none'
+
+            // On clicking the button menu-sel
+            function onSelectBtnClick(event){
+                var btnTarget = event.currentTarget
+                btnTarget.parentElement.classList.toggle('ib-frm-prod__select--open')
+            }
+
+            // On clicking an option...
+            function onSelectOptClick(event){
+                var optTarget = event.currentTarget
+                var idx = optTarget.dataset.idx
+                optTarget.parentElement.parentElement.classList.toggle('ib-frm-prod__select--open')
+                chosenItemAdd(idx)
+            }
+
+            // Keyboard events
+            function onSelectKeyDown(event){
+                switch(event.code){
+                    case 'ArrowDown':
+                        event.preventDefault()
+                        event.currentTarget.classList.add('ib-frm-prod__select--open')
+                        selectSetFocus(event.currentTarget, true)
+                        break
+                    case 'ArrowUp':
+                        event.preventDefault()
+                        selectSetFocus(event.currentTarget, false)
+                        break
+                    case 'Escape':
+                        event.preventDefault()
+                        event.currentTarget.classList.remove('ib-frm-prod__select--open')
+                }
+            }
+
+            function selectSetFocus(target, goNext){
+                var elmFocused = document.activeElement
+                var optionsButtons = target.querySelectorAll('.ib-frm-prod__select-opt')
+
+                if (target.contains(elmFocused)){
+                    if (!elmFocused.classList.contains('ib-frm-prod__select-opt')){
+                        optionsButtons[(goNext? 0: optionsButtons.length-1)].focus()
+                    }
+                    else {
+                        if (goNext) {
+                            if (elmFocused.nextElementSibling){
+                                elmFocused.nextElementSibling.focus()
+                            }
+                            else {
+                                optionsButtons[0].focus()
+                            }
+                        }
+                        else {
+                            if (elmFocused.previousElementSibling){
+                                elmFocused.previousElementSibling.focus()
+                            }
+                            else {
+                                optionsButtons[optionsButtons.length-1].focus()
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+            // Get node cloned from product selector component template
+            var cloneSelect = tplSelect.content.firstElementChild.cloneNode(true)
+
+
+            // Insert the selector component node before textarea and get the element
+            var elmSelect = elmFrmTextArea.parentElement.insertBefore(cloneSelect, elmFrmTextArea)
+
+            elmSelect.querySelector('.ib-frm-prod__select-btn').addEventListener('click', onSelectBtnClick, false)
+            elmSelect.addEventListener('keydown', onSelectKeyDown, false)
+
+            // Get the container for options of select menu
+            var elmSelectOpts = elmSelect.getElementsByClassName('ib-frm-prod__select-opts')[0]
+
+            // Populate the menu options
+            // Get the option element from template
+            var elmTplSelectOpt = tplSelectOpt.content.firstElementChild
+
+            for (var i=0; i<30; i++){
+                var opt = elmTplSelectOpt.cloneNode(true)
+                opt.addEventListener('click', onSelectOptClick, false)
+                opt.dataset.idx = i
+                opt.querySelector('.ib-frm-prod__select-opt-model').innerText = productsArray[i][0]
+                opt.querySelector('.ib-frm-prod__select-opt-pump').innerText = productsArray[i][1]
+                opt.querySelector('.ib-frm-prod__select-opt-pipe').innerText = productsArray[i][2]
+                opt.tabIndex = -1
+                elmSelectOpts.appendChild(opt)
+            }
+
+            //-----------------------------------------------------------------
+            // The Chosen items
+
+            // Array of chosen quantities
+            var chosenItemQtyArray = []
+
+            // Templates
+            var tplChosenItem = document.getElementById('ib-frm-prod__chosen-item-tpl')
+            var tplChosenEmlTbl = document.getElementById('ib-frm-prod__chosen-eml-tbl-tpl')
+            var tplChosenEmlTblRow = document.getElementById('ib-frm-prod__chosen-eml-tbl-row-tpl')
+
+
+            // Containers of chosen items
+            var elmChosen = document.querySelector('.ib-frm-prod__chosen')
+            var elmChosenList = elmChosen.querySelector('.ib-frm-prod-chosen__list')
+            var elmTplChosenEmlTbl = tplChosenEmlTbl.content //.firstElementChild
+            var elmTplChosenEmlTblBody = elmTplChosenEmlTbl.querySelector('tbody')
+
+
+            // Refresh the content of chosen items lists
+            // TODO: Keep focus on buttons after refreshing
+            function chosenItemsRefresh(){
+                // Clear the visible list
+                elmChosenList.innerHTML=''
+
+                // Clear the hidden list
+                elmTplChosenEmlTblBody.innerHTML = ''
+                elmFrmTextArea.innerHTML=''
+
+                // Sum of all quantities
+                var qtySum = (chosenItemQtyArray.length<1? 0 : chosenItemQtyArray.reduce((previousVal, currentVal) => previousVal+currentVal))
+                if (qtySum < 1){
+                    // Show empty list message
+                    elmChosen.classList.add('ib-frm-prod__chosen--empty')
+                    elmFrmTextArea.innerHTML=''
+                }
+                else {
+                    elmChosen.classList.remove('ib-frm-prod__chosen--empty')
+
+                    var elmTplChosenItem = tplChosenItem.content.firstElementChild
+                    var elmTplChosenEmlTblRow = tplChosenEmlTblRow.content
+
+
+                    for(var i=0; i<chosenItemQtyArray.length; i++){
+                        var qty = chosenItemQtyArray[i]
+                        if(!qty) continue
+
+                        // Insert chosen item on visible list
+                        var item = elmTplChosenItem.cloneNode(true)
+                        item.dataset.idx = i
+                        item.querySelector('.ib-frm-prod-chosen-item__name').innerText = productsArray[i][0]
+                        item.querySelector('.ib-frm-prod-chosen-item__desc').innerHTML = productsArray[i][1] + '<br>' + productsArray[i][2]
+                        item.querySelector('.ib-frm-prod-chosen-item__qty').innerHTML = `${qty}<u>UNIDADE${qty > 1 ? 'S' : ''}</u>`
+                        item.querySelector('.ib-frm-prod-chosen-item__qty-plus').dataset.idx = i
+                        item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener('click', onChosenItemAddBtnClick)
+                        item.querySelector('.ib-frm-prod-chosen-item__qty-minus').dataset.idx = i
+                        item.querySelector('.ib-frm-prod-chosen-item__qty-minus').addEventListener('click', onChosenItemDelBtnClick)
+                        elmChosenList.appendChild(item)
+
+                        // Insert chosen item on (table) list
+                        var row = elmTplChosenEmlTblRow.cloneNode(true)
+                        row.querySelector('tr td').innerText = qty
+                        row.querySelector('div').innerText = productsArray[i][0]
+                        row.querySelectorAll('div')[1].innerHTML = productsArray[i][1] + '<br />' + productsArray[i][2]
+                        elmTplChosenEmlTblBody.appendChild(row)
+                    }
+
+                    // Inserts the chosen (table) list on hidden textarea field to be sent by e-mail message later
+                    elmFrmTextArea.innerText = elmTplChosenEmlTbl.firstElementChild.outerHTML
+
+                }
+
+                // TODO Remove this code in production (begin)
+                document.getElementById('hidden-textarea-innertext-sample').innerText = elmFrmTextArea.innerText
+                // TODO Remove this code in production (end)
+            }
+
+            function chosenItemAdd(itemIndex){
+                var currentQty = chosenItemQtyArray[itemIndex]
+                chosenItemQtyArray[itemIndex] = (currentQty?currentQty:0) + 1
+                chosenItemsRefresh()
+            }
+
+            function chosenItemDel(itemIndex){
+                var currentQty = chosenItemQtyArray[itemIndex]
+                chosenItemQtyArray[itemIndex] = (currentQty?currentQty:0) - 1
+                chosenItemsRefresh()
+            }
+
+            function onChosenItemAddBtnClick(event){
+                chosenItemAdd(event.currentTarget.dataset.idx)
+            }
+
+            function onChosenItemDelBtnClick(event){
+                chosenItemDel(event.currentTarget.dataset.idx)
+            }
+
+            chosenItemsRefresh()
+
+        }
+        document.addEventListener('DOMContentLoaded', ibFrmQuotaProdSelectMain)
+    </script>
+
+
+<h3>Texto dentro do elemento TEXTAREA oculto</h3>
+
+<p style="margin-bottom: 5em; font-family: monospace; font-size:12px;border: 1px solid var(--ib-frm-border-color); padding: 8px;width: 100%;overflow: auto;" id="hidden-textarea-innertext-sample"></p>
+
+<p style="font-size: 14px;line-height: 1.4;font-style: italic; border-top: 2px dashed #aaa;padding-top: 1em;padding-bottom: 5em;">
+    Este código foi postado como um Gist. Mas resolvi criar o repositório para prover esta visualização do resultado no GitHub Pages
 </p>
-
-
-
-<script src="index.js"></script>
-
 </body>
 </html>
