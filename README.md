@@ -22,3 +22,13 @@ Objetivos:
     - Os menu deve respoder a eventos de teclado como um controle select.
 - Se o navegador não suporta o elemento HTML template, então o textarea fica visível e o usuário altera seu texto manualmente.
 - Cada opção do menu pode conter mais elementos filhos com estilos de apresentação diversos.
+
+
+## Página de exemplo
+
+_Este código foi postado como um Gist. Mas resolvi criar o repositório para prover esta visualização do resultado no GitHub Pages_
+
+[https://iraja-baltezan.github.io/form-dropdown-list/](https://iraja-baltezan.github.io/form-dropdown-list/)
+
+
+---
