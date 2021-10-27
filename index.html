@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dropdown Menu HTML/CSS/JS</title>
-    <style>
 
+<style>
 :root {
-    --ib-frm-bg-color: hsl(220deg 15% 85%);
+    --ib-frm-bg-color: hsl(220deg 10% 92%);
     --ib-frm-border-color: rgba(0 0 0/15%);
     --ib-frm-fg-color: rgba(0 0 0/85%);
 
@@ -266,6 +266,7 @@ h1 {
     grid-row: 1/3
 }
 
+
 /* Confirm item delete */
 .ib-frm-prod-chosen__item--del {
     background-color: var(--ib-frm-focus-bg-color);
@@ -306,7 +307,6 @@ h1 {
     margin: 0px 8px 0px -6px;
     filter:  invert(53%) sepia(92%) saturate(409%) hue-rotate(349deg) brightness(88%) contrast(92%);
 
-;
 }
 .ib-frm-prod-chosen-del-confirm__label {
     grid-column: 2/4;
@@ -407,43 +407,7 @@ h1 {
                     Toque no botão "Adicionar itens na cotação" para adicionar itens à sua cotação.
                 </div>
                 <div class="ib-frm-prod__chosen-body">
-                    <ul class="ib-frm-prod-chosen__list">
-                        <!--
-                        <li class="ib-frm-prod-chosen__item">
-                            <span class="ib-frm-prod-chosen-item__name">PLUS-14</span>
-                            <span class="ib-frm-prod-chosen-item__desc">P-15/3-K   6,0 cv<br>SUC 1½”   REC 1½”</span>
-                            <span class="ib-frm-prod-chosen-item__qty">1<u>UNIDADE</u></span>
-                            <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
-                            <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
-                        </li>
-                        <li class="ib-frm-prod-chosen__item">
-                            <span class="ib-frm-prod-chosen-item__name">PLUS-14</span>
-                            <span class="ib-frm-prod-chosen-item__desc">P-15/3-K   6,0 cv<br>SUC 1½”   REC 1½”</span>
-                            <span class="ib-frm-prod-chosen-item__qty">99<u>UNIDADES</u></span>
-                            <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
-                            <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
-                            <div class="ib-frm-prod-chosen-del-confirm">
-                                <div class="ib-frm-prod-chosen-del-confirm__label">Excluir este item da cotação?</div>
-                                <input class="ib-frm-prod-chosen-del-confirm__yes" type="button" value="Excluir">
-                                <input class="ib-frm-prod-chosen-del-confirm__no" type="button" value="Manter">
-                            </div>
-                        </li>
-                        <li class="ib-frm-prod-chosen__item">
-                            <span class="ib-frm-prod-chosen-item__name">PLUS-14</span>
-                            <span class="ib-frm-prod-chosen-item__desc">P-15/3-K   6,0 cv<br>SUC 1½”   REC 1½”</span>
-                            <span class="ib-frm-prod-chosen-item__qty">99<u>UNIDADES</u></span>
-                            <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
-                            <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
-                        </li>
-                        <li class="ib-frm-prod-chosen__item">
-                            <span class="ib-frm-prod-chosen-item__name">PLUS-14</span>
-                            <span class="ib-frm-prod-chosen-item__desc">P-15/3-K   6,0 cv<br>SUC 1½”   REC 1½”</span>
-                            <span class="ib-frm-prod-chosen-item__qty">99<u>UNIDADES</u></span>
-                            <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
-                            <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
-                        </li>
-                        -->
-                    </ul>
+                    <ul class="ib-frm-prod-chosen__list"></ul>
                 </div>
             </div>
         </div>
@@ -496,12 +460,12 @@ h1 {
 
 
     <script>
-        // TODO Esc key hide options list
         function ibFrmQuotaProdSelectMain(){
             // Test to see if the browser supports the HTML template element by checking
             // for the presence of the template element's content attribute.
             if (!('content' in document.createElement('template'))) return;
 
+            // Items to populate the options of menu.
             var productsArray=[
                 ['KA-1',    'THS-18     3.0 cv',    'SUC 2”    REC 1½”'  ],
                 ['KA-2',    'THS-18     4.0 cv',    'SUC 2”    REC 1½”'  ],
@@ -748,7 +712,7 @@ h1 {
 <p style="margin-bottom: 5em; font-family: monospace; font-size:12px;border: 1px solid var(--ib-frm-border-color); padding: 8px;width: 100%;overflow: auto;" id="hidden-textarea-innertext-sample"></p>
 
 <p style="font-size: 14px;line-height: 1.4;font-style: italic; border-top: 2px dashed #aaa;padding-top: 1em;padding-bottom: 5em;">
-    Este código foi postado como um Gist. Mas resolvi criar o repositório para prover esta visualização do resultado no GitHub Pages
+    Este código foi postado como um Gist. Mas resolvi criar o repositório para prover esta visualização do resultado no GitHub Pages.
 </p>
 </body>
 </html>
