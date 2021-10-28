@@ -44,32 +44,49 @@
     --ib-svg-warn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'%3E%3Cpath d='M12 5.99L19.53 19H4.47L12 5.99M2.74 18c-.77 1.33.19 3 1.73 3h15.06c1.54 0 2.5-1.67 1.73-3L13.73 4.99c-.77-1.33-2.69-1.33-3.46 0L2.74 18zM11 11v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zm0 5h2v2h-2z'/%3E%3C/svg%3E");
 }
 
-* {
-    box-sizing: border-box;
-}
+/* ************************************************************************* */
+/* Some basic styles */
 html {
     scroll-behavior: smooth;
 }
 body {
-    /* background-color: #e7e9ef; */
     background-color: var(--ib-frm-bg-color);
     font-family: sans-serif;
-    max-width: 300px;
+    max-width:768px;
     margin: auto;
+    padding: 1em;
     font-size: 16px;
+    line-height: 1.3em;
+}
+body, body * {
+    box-sizing: border-box;
 }
 h1 {
     font-weight: normal;
 }
+.ib-snippet-header,
+.ib-snippet-footer {
+    padding: 0 1em;
+}
+.ib-snippet-header {
+    border-bottom: 1px solid #ccc;
+}
+.ib-snippet-footer {
+    border-top: 1px solid #ccc;
+}
+
+/* ************************************************************************* */
+/* Selector component */
+
 .ib-frm-prod__select {
     position: relative;
-    max-width: 300px;
+    min-width: 300px;
     margin: 1em auto;
     display: block;
     -webkit-user-select: none;
-	-moz-user-select: none;
-	-o-user-select: none;
-	user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 
 .ib-frm-prod__select-btn {
@@ -98,7 +115,7 @@ h1 {
     filter: invert();
 }
 
-
+/* ************************************************************************* */
 /* Product options */
 
 .ib-frm-prod__select-opts {
@@ -121,11 +138,12 @@ h1 {
 }
 
 
+/* ************************************************************************* */
 /* Product option to select */
 
 .ib-frm-prod__select-opt {
     display: grid;
-    grid-template-columns:45% auto;
+    grid-template-columns:130px auto;
     grid-template-rows: 17px 17px;
     border: none;
     border-bottom:1px solid  var(--ib-frm-inp-text-border-color);
@@ -164,7 +182,29 @@ h1 {
     align-self: start;
 }
 
-/* List of chosen products */
+@media (min-width:420px) and (max-width: 599px){
+    .ib-frm-prod__select-opt-pump ,
+    .ib-frm-prod__select-opt-pipe {
+        align-self: center;
+        grid-row: 1/3;
+        font-size: 14px;
+    }
+    .ib-frm-prod__select-opt-pipe {
+        margin-left: 50%;
+    }
+}
+@media (min-width:480px) and (max-width:599px) {
+    .ib-frm-prod__select-opt-pump ,
+    .ib-frm-prod__select-opt-pipe {
+        font-size: 16px;
+    }
+    .ib-frm-prod__select-opt-pipe {
+        margin-left: 50%;
+    }
+}
+
+/* ************************************************************************* */
+/* List of selected products */
 
 .ib-frm-prod__chosen {
     margin-top: 1em;
@@ -217,17 +257,58 @@ h1 {
     grid-row: 1/2;
     font-size: 1.2em;
 }
-.ib-frm-prod-chosen-item__desc {
+.ib-frm-prod-chosen-item__pump,
+.ib-frm-prod-chosen-item__pipe {
     grid-column: 1/2;
-    grid-row: 2/3;
     font-size: 0.8em;
-    align-self: end;
+    line-height: 1em;
+    align-self: center;
     color: var(--ib-frm-inp-text-color);
 }
+.ib-frm-prod-chosen-item__pump {
+    grid-row: 2/3;
+}
+.ib-frm-prod-chosen-item__pipe {
+    grid-row: 3/4;
+}
+
+@media (min-width:400px) and (max-width:599px) {
+    .ib-frm-prod-chosen-item__name {
+        grid-row: 1/4;
+        align-self: start;
+        font-size: 1.4em;
+    }
+    .ib-frm-prod-chosen-item__pump {
+        grid-row: 1/2;
+        margin-left: 100px;
+        align-self: start;
+    }
+    .ib-frm-prod-chosen-item__pipe {
+        grid-row: 2/4;
+        margin-left: 100px;
+        align-self: center;
+    }
+}
+@media (min-width:512px) and (max-width:599px) {
+    .ib-frm-prod-chosen-item__name {
+        grid-row: 1/4;
+        align-self: center;
+    }
+    .ib-frm-prod-chosen-item__pump {
+        grid-row: 1/4;
+        align-self: center;
+    }
+    .ib-frm-prod-chosen-item__pipe {
+        grid-row: 1/4;
+        align-self: center;
+        margin-left: 214px;
+    }
+}
+
 
 .ib-frm-prod-chosen-item__qty {
     grid-column: 3/4;
-    grid-row: 1/3;
+    grid-row: 1/4;
     font-size: 1.5em;
     text-align: center;
     align-self: center;
@@ -236,6 +317,8 @@ h1 {
     display: block;
     text-decoration: none;
     font-size: 0.3em;
+    line-height: 1em;
+    margin: 0 auto -4px;
 }
 
 .ib-frm-prod-chosen__item input:hover {
@@ -258,84 +341,16 @@ h1 {
 .ib-frm-prod-chosen-item__qty-minus {
     background-image: var(--ib-svg-minus);
     grid-column: 2/3;
-    grid-row: 1/3
+    grid-row: 1/4
 }
 .ib-frm-prod-chosen-item__qty-plus {
     background-image: var(--ib-svg-plus);
     grid-column: 4/5;
-    grid-row: 1/3
+    grid-row: 1/4
 }
 
 
-/* Confirm item delete */
-.ib-frm-prod-chosen__item--del {
-    background-color: var(--ib-frm-focus-bg-color);
-    margin: 0 -8px;
-    border-bottom: 1px solid var(--ib-frm-inp-text-border-color);
-    padding: 8px;
-}
-.ib-frm-prod-chosen__item--del .ib-frm-prod-chosen-del-confirm {
-    height: auto;
-    margin: 8px 0 0;
-    padding: 16px 8px 8px;
-}
-.ib-frm-prod-chosen-del-confirm {
-    height: 0;
-    grid-column: 1/5;
-    grid-row: 3/4;
-    margin: 0;
-    padding: 0;
-    color: var(--ib-frm-inp-text-color);
-    border-top: 1px dashed var(--ib-frm-inp-text-border-color);
-    transition: all 0.3s;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto;
-    overflow: hidden;
-}
-.ib-frm-prod-chosen-del-confirm::before{
-    content: "";
-    display: block;
-    grid-column: 1/2;
-    grid-row: 1/3;
-    background-image: var(--ib-svg-warn);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: 80px;
-    width: 80px;
-    margin: 0px 8px 0px -6px;
-    filter:  invert(53%) sepia(92%) saturate(409%) hue-rotate(349deg) brightness(88%) contrast(92%);
-
-}
-.ib-frm-prod-chosen-del-confirm__label {
-    grid-column: 2/4;
-    grid-row: 1/2;
-    margin-bottom: 8px;
-    /* font-weight: bold; */
-}
-.ib-frm-prod-chosen-del-confirm__yes{
-    grid-column: 2/3;
-    grid-row: 2/3;
-    background-color: var(--ib-frm-btn-warning-bg);
-    color: var(--ib-frm-btn-warning-fg);
-    justify-self: start;
-}
-.ib-frm-prod-chosen-del-confirm__no {
-    grid-column: 3/4;
-    grid-row: 2/3;
-    color: var(--ib-frm-btn-success-fg);
-    background-color: var(--ib-frm-btn-success-bg);
-}
-.ib-frm-prod-chosen-del-confirm__no,
-.ib-frm-prod-chosen-del-confirm__yes {
-    border: 1px solid rgba(255 255 255/45%);
-    border-radius: var(--ib-frm-inp-border-radius);
-    padding: 4px 8px;
-    box-shadow: var(--ib-frm-btn-default-shadow);
-}
-
-
+/* ************************************************************************* */
 /* Control to be replaced by the select menu */
 
 .ib-frm-prod__textarea {
@@ -343,119 +358,138 @@ h1 {
     width: 100%;
 }
 
+/* ************************************************************************* */
+/* Styles to make the layout of this page a little more responsive. */
 
-
+@media (min-width:600px) {
+    .ib-snippet-main {
+        display: grid;
+        grid-template-columns: auto 320px;
+    }
+    .ib-snippet-desc, .ib-snippet-result {
+        padding: 1em;
+    }
+}
 
 </style>
 </head>
 <body>
 
-    <h1>Menu drop-down</h1>
+    <header class="ib-snippet-header">
+        <h1>Menu drop-down</h1>
+    </header>
 
-    <p>
-        Pedaço de código HTML, CSS e JavaScript para ocultar e exibir uma lista como um menu drop-down.
-    </p>
-    <p>
-        O item selecionado é inserido em um lista visível e também um elemento input do tipo hidden ou o próprio elemento textarea, que será oculto, de um formulário.
-    </p>
-    <p>
-        A intenção é usar este código em um site com um editor de formulários que permite a inserção de HTML, CSS.
-    </p>
+    <main class="ib-snippet-main">
+        <section class="ib-snippet-desc">
+            <p>
+                Fragmento de código HTML, CSS e JavaScript para ocultar e exibir uma lista como um menu drop-down.
+            </p>
+            <p>
+                O item selecionado é inserido em uma lista visível e também em um elemento input do tipo hidden ou o próprio elemento textarea, que será oculto, de um formulário.
+            </p>
 
-    <p>Objetivos:</p>
-    <ul>
-        <li>Criar um menu drop-down semelhante a um input do tipo select.</li>
-        <li>
-            Se o navegador suporta o elemento HTML template:
+            <p>Objetivos:</p>
             <ul>
-                <li>O elemento textarea será oculto.</li>
-                <li>O elemento textarea (ou um input hidden) conterá o código de uma tabela html com os itens escolhidos.</li>
-                <li><strong>O código da tabela será limitado ao que é suportado pelos clientes de e-mail.</strong></li>
-                <li>Um botão para abertura e fechamento do menu de opções será inserido na posição onde o textarea estava visível.</li>
-                <li>Um quadro representando a lista dos escolhidos será inserido abaixo do botão de controle do menu.</li>
-                <li>Clicar em uma opção do menu insere a opção na lista dos escolhidos.</li>
-                <li>A cada inserção de um item, este tem a quantidade incrementada em 1 unidade</li>
-                <li>Cada item inserido contém os botões + e - para alterar quantidade do item.</li>
-                <li>Remover item da lista se a quantidade for 1 e o botão "-" for pressionado.</li>
-                <li>Os menu deve respoder a eventos de teclado como um controle select.</li>
+                <li>Criar um menu drop-down semelhante a um input do tipo select.</li>
+                <li>
+                    Se o navegador suporta o elemento HTML template:
+                    <ul>
+                        <li>O elemento textarea será oculto.</li>
+                        <li>O elemento textarea (ou um input hidden) conterá o código de uma tabela html com os itens escolhidos.</li>
+                        <li><strong>O código da tabela será limitado ao que é suportado pelos clientes de e-mail.</strong></li>
+                        <li>Um botão para abertura e fechamento do menu de opções será inserido na posição onde o textarea estava visível.</li>
+                        <li>Um quadro representando a lista dos escolhidos será inserido abaixo do botão de controle do menu.</li>
+                        <li>Clicar em uma opção do menu insere a opção na lista dos escolhidos.</li>
+                        <li>A cada inserção de um item, este tem a quantidade incrementada em 1 unidade</li>
+                        <li>Cada item inserido contém os botões + e - para alterar quantidade do item.</li>
+                        <li>Remover item da lista se a quantidade for 1 e o botão "-" for pressionado.</li>
+                        <li>Os menu deve respoder a eventos de teclado como um controle select.</li>
+                    </ul>
+                </li>
+                <li>Se o navegador não suporta o elemento HTML template, então o textarea fica visível e o usuário altera seu texto manualmente.</li>
+                <li>Cada opção do menu pode conter mais elementos filhos com estilos de apresentação diversos.</li>
             </ul>
-        </li>
-        <li>Se o navegador não suporta o elemento HTML template, então o textarea fica visível e o usuário altera seu texto manualmente.</li>
-        <li>Cada opção do menu pode conter mais elementos filhos com estilos de apresentação diversos.</li>
-    </ul>
+        </section>
 
-    <h2>Menu exemplo</h2>
+        <section class="ib-snippet-result">
+            <h2>Menu exemplo</h2>
 
-    <!--
-        This textarea will be hidden if browser has support to HTML template.
-        The drop-down menu with the list of chosen items will be inserted here.
-    -->
-    <textarea class="ib-frm-prod__textarea" name="" id="" cols="30" rows="10"></textarea>
+            <!--
+                This textarea will be hidden if browser has support to HTML template.
+                The drop-down menu with the list of chosen items will be inserted here.
+            -->
+            <textarea class="ib-frm-prod__textarea" name="" id="" cols="30" rows="10"></textarea>
+
+            <h3 style="font-weight: normal;margin:2em auto 0;">Texto no INPUT ou TEXTAREA oculto</h3>
+
+            <p style="margin-bottom: 5em; font-family: monospace; font-size:12px;border: 1px solid var(--ib-frm-border-color); padding: 8px;width: 100%;overflow: auto;background-color: #fff;" id="hidden-textarea-innertext-sample"></p>
 
 
-    <template id="ib-frm-prod__select-tpl">
-        <div class="ib-frm-prod__select">
-            <button class="ib-frm-prod__select-btn">
-                Adicionar itens na cotação...
-            </button>
+            <template id="ib-frm-prod__select-tpl">
+                <div class="ib-frm-prod__select">
+                    <button class="ib-frm-prod__select-btn">
+                        Adicionar itens na cotação...
+                    </button>
 
-            <div class="ib-frm-prod__select-opts"></div>
+                    <div class="ib-frm-prod__select-opts"></div>
 
-            <div class="ib-frm-prod__chosen">
-                <div class="ib-frm-prod__chosen-header"><span>Modelo</span><span>Quantidade</span></div>
-                <div class="ib-frm-prod__chosen-msg">
-                    Toque no botão "Adicionar itens na cotação" para adicionar itens à sua cotação.
+                    <div class="ib-frm-prod__chosen">
+                        <div class="ib-frm-prod__chosen-header"><span>Modelo</span><span>Quantidade</span></div>
+                        <div class="ib-frm-prod__chosen-msg">
+                            Toque no botão "Adicionar itens na cotação" para adicionar itens à sua cotação.
+                        </div>
+                        <div class="ib-frm-prod__chosen-body">
+                            <ul class="ib-frm-prod-chosen__list"></ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="ib-frm-prod__chosen-body">
-                    <ul class="ib-frm-prod-chosen__list"></ul>
-                </div>
-            </div>
-        </div>
-    </template>
-    <template id="ib-frm-prod__select-opt-tpl">
-        <button class="ib-frm-prod__select-opt">
-            <span class="ib-frm-prod__select-opt-model"></span>
-            <span class="ib-frm-prod__select-opt-pump"></span>
-            <span class="ib-frm-prod__select-opt-pipe"></span>
-        </button>
-    </template>
-    <template id="ib-frm-prod__chosen-item-tpl">
-        <li class="ib-frm-prod-chosen__item">
-            <span class="ib-frm-prod-chosen-item__name"></span>
-            <span class="ib-frm-prod-chosen-item__desc"></span>
-            <span class="ib-frm-prod-chosen-item__qty"></span>
-            <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
-            <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
-        </li>
-    </template>
+            </template>
+            <template id="ib-frm-prod__select-opt-tpl">
+                <button class="ib-frm-prod__select-opt">
+                    <span class="ib-frm-prod__select-opt-model"></span>
+                    <span class="ib-frm-prod__select-opt-pump"></span>
+                    <span class="ib-frm-prod__select-opt-pipe"></span>
+                </button>
+            </template>
+            <template id="ib-frm-prod__chosen-item-tpl">
+                <li class="ib-frm-prod-chosen__item">
+                    <span class="ib-frm-prod-chosen-item__name"></span>
+                    <span class="ib-frm-prod-chosen-item__pump"></span>
+                    <span class="ib-frm-prod-chosen-item__pipe"></span>
+                    <span class="ib-frm-prod-chosen-item__qty"></span>
+                    <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
+                    <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
+                </li>
+            </template>
 
-    <template id="ib-frm-prod__chosen-eml-tbl-tpl">
-        <table border="0" cellspacing="0" cellpadding="4" width="100%"  style="font-family:verdana,arial,helv,sans-serif;color:#444444;">
-            <thead>
+            <template id="ib-frm-prod__chosen-eml-tbl-tpl">
+                <table border="0" cellspacing="0" cellpadding="4" width="100%"  style="font-family:verdana,arial,helv,sans-serif;color:#444444;">
+                    <thead>
+                        <tr>
+                            <th align="left" width="64">Quantidade</th>
+                            <th align="left">Modelo</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2"><hr></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </template>
+
+            <template id="ib-frm-prod__chosen-eml-tbl-row-tpl">
                 <tr>
-                    <th align="left" width="64">Quantidade</th>
-                    <th align="left">Modelo</th>
+                    <td align="center" style="font-size:24px;"></td>
+                    <td>
+                        <div style="font-size:18px;"></div>
+                        <div style="font-size:14px;"></div>
+                    </td>
                 </tr>
-                <tr>
-                    <th colspan="2"><hr></th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </template>
-
-    <template id="ib-frm-prod__chosen-eml-tbl-row-tpl">
-        <tr>
-            <td align="center" style="font-size:24px;"></td>
-            <td>
-                <div style="font-size:18px;"></div>
-                <div style="font-size:14px;"></div>
-            </td>
-        </tr>
-        <tr><th colspan="2"><hr></th></tr>
-    </template>
-
+                <tr><th colspan="2"><hr></th></tr>
+            </template>
+        </section>
+    </main>
 
 
 
@@ -654,7 +688,8 @@ h1 {
                         var item = elmTplChosenItem.cloneNode(true)
                         item.dataset.idx = i
                         item.querySelector('.ib-frm-prod-chosen-item__name').innerText = productsArray[i][0]
-                        item.querySelector('.ib-frm-prod-chosen-item__desc').innerHTML = productsArray[i][1] + '<br>' + productsArray[i][2]
+                        item.querySelector('.ib-frm-prod-chosen-item__pump').innerHTML = productsArray[i][1]
+                        item.querySelector('.ib-frm-prod-chosen-item__pipe').innerHTML = productsArray[i][2]
                         item.querySelector('.ib-frm-prod-chosen-item__qty').innerHTML = `${qty}<u>UNIDADE${qty > 1 ? 'S' : ''}</u>`
                         item.querySelector('.ib-frm-prod-chosen-item__qty-plus').dataset.idx = i
                         item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener('click', onChosenItemAddBtnClick)
@@ -706,18 +741,15 @@ h1 {
         document.addEventListener('DOMContentLoaded', ibFrmQuotaProdSelectMain)
     </script>
 
+<footer class="ib-snippet-footer">
+    <p>
+        Repositório deste código:
+        <a href="https://github.com/iraja-baltezan/form-dropdown-list" style="display: block;margin-top: 1em;">
+            https://github.com/iraja-baltezan/form-dropdown-list
+        </a>
+    </p>
+</footer>
 
-<h3 style="font-weight: normal;margin:2em auto 0;">Texto no INPUT ou TEXTAREA oculto</h3>
 
-<p style="margin-bottom: 5em; font-family: monospace; font-size:12px;border: 1px solid var(--ib-frm-border-color); padding: 8px;width: 100%;overflow: auto;background-color: #fff;" id="hidden-textarea-innertext-sample"></p>
-
-<p style="font-size: 14px;line-height: 1.4;font-style: italic; border-top: 1px solid #aaa;padding-top: 1em;padding-bottom: 5em;">
-    Repositório deste código:
-    <a href="https://github.com/iraja-baltezan/form-dropdown-list"
-        style="display: block;margin-top: 1em;"
-    >
-        https://github.com/iraja-baltezan/form-dropdown-list
-    </a>
-</p>
 </body>
 </html>
