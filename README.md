@@ -30,4 +30,4 @@ Objetivos:
 > \
 > _Este código me serviu a um caso específico de alteração de código legado._
 >
-> _Este código foi postado como um Gist. Mas resolvi criar o repositório público para quem quiser usar, corrigir, etc. e para prover esta visualização do resultado no GitHub Pages._
+> _Postei como um Gist. Mas depois resolvi criar o repositório público para quem quiser usar, corrigir, etc. e para prover esta visualização do resultado no GitHub Pages._
