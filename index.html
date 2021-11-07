@@ -389,9 +389,9 @@ h1 {
             -->
             <textarea class="ib-frm-prod__textarea" name="" id="" cols="30" rows="10"></textarea>
 
-            <h3 style="font-weight: normal;margin:2em auto 0;">Texto no INPUT ou TEXTAREA oculto</h3>
+            <h3 style="font-weight: normal;margin:2em auto 0;">Texto no TEXTAREA oculto</h3>
 
-            <p style="margin-bottom: 5em; font-family: monospace; font-size:12px;border: 1px solid var(--ib-frm-border-color); padding: 8px;width: 100%;overflow: auto;background-color: #fff;" id="hidden-textarea-innertext-sample"></p>
+            <p style="margin-bottom: 5em; font-family: monospace; font-size:12px;border: 2px dashed red; padding: 8px;width: 100%;overflow: auto;background-color: #fff;" id="hidden-textarea-innertext-sample"></p>
 
         </section>
         <section class="ib-snippet-desc">
@@ -705,10 +705,28 @@ h1 {
                     item.querySelector('.ib-frm-prod-chosen-item__pump').innerHTML = productsArray[i][1]
                     item.querySelector('.ib-frm-prod-chosen-item__pipe').innerHTML = productsArray[i][2]
                     item.querySelector('.ib-frm-prod-chosen-item__qty').innerHTML = `${qty}<u>UNIDADE${qty > 1 ? 'S' : ''}</u>`
+
                     item.querySelector('.ib-frm-prod-chosen-item__qty-plus').dataset.idx = i
                     item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener('click', onChosenItemAddBtnClick)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener("mousedown", onLongPressStart)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener("touchstart", onLongPressStart)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener("mouseup", onLongPressEnd)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener("mouseout", onLongPressEnd)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener("touchend", onChoseItemAddBtnTouchEnd)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener("touchleave", onLongPressEnd)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener("touchcancel", onLongPressEnd)
+
                     item.querySelector('.ib-frm-prod-chosen-item__qty-minus').dataset.idx = i
                     item.querySelector('.ib-frm-prod-chosen-item__qty-minus').addEventListener('click', onChosenItemDelBtnClick)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-minus').addEventListener("mousedown", onLongPressStart)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-minus').addEventListener("touchstart", onLongPressStart)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-minus').addEventListener("mouseup", onLongPressEnd)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-minus').addEventListener("mouseout", onLongPressEnd)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-minus').addEventListener("touchend", onChosenItemDelBtnTouchEnd)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-minus').addEventListener("touchleave", onLongPressEnd)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-minus').addEventListener("touchcancel", onLongPressEnd)
+                    elmChosenList.appendChild(item)
+
                     elmChosenList.appendChild(item)
 
                     // Insert chosen item on (table) list
@@ -729,6 +747,51 @@ h1 {
             // TODO Remove this code in production (end)
         }
 
+
+        // Chosen items events ----------------------------------------------------
+        // Handle long press
+        var longPress = false
+        var longPressTimeOut = null
+
+        function onLongPressStart(event){
+            event.preventDefault()
+            // Proceed only if is the left button and the click event not started
+            if (event.type === 'click' && event.button !== 0) return
+            longPressCancel()
+
+            if (longPressTimeOut === null) {
+                longPressTimeOut= setInterval(
+                    longPressEventHandler, 200,
+                    event.target.dataset.idx,
+                    event.target.classList.contains('ib-frm-prod-chosen-item__qty-plus')
+                    )
+                longPress = true
+            }
+            return false
+        }
+
+        function onLongPressEnd(event){
+            event.preventDefault()
+            longPressCancel()
+            longPress = false
+            return false
+        }
+
+        function longPressEventHandler(idx, add){
+            if (add)
+                chosenItemAdd(idx)
+            else if (chosenItemQtyArray[idx] > 2)
+                chosenItemDel(idx)
+        }
+
+        function longPressCancel(){
+            if (longPressTimeOut !== null) {
+                clearInterval(longPressTimeOut)
+                longPressTimeOut = null
+            }
+            longPress = false
+        }
+
         function chosenItemAdd(itemIndex){
             var currentQty = chosenItemQtyArray[itemIndex]
             chosenItemQtyArray[itemIndex] = (currentQty?currentQty:0) + 1
@@ -743,12 +806,30 @@ h1 {
 
         function onChosenItemAddBtnClick(event){
             event.preventDefault()
+            longPressCancel()
+            if (longPress) return false
             chosenItemAdd(event.currentTarget.dataset.idx)
         }
 
         function onChosenItemDelBtnClick(event){
             event.preventDefault()
+            longPressCancel()
+            if (longPress) return false
             chosenItemDel(event.currentTarget.dataset.idx)
+        }
+
+        function onChoseItemAddBtnTouchEnd(event){
+            event.preventDefault()
+            longPressCancel()
+            if (longPress) return false
+            chosenItemAdd(event.target.dataset.idx)
+        }
+
+        function onChosenItemDelBtnTouchEnd(event){
+            event.preventDefault()
+            longPressCancel()
+            if (longPress) return false
+            chosenItemDel(event.target.dataset.idx)
         }
 
         chosenItemsRefresh()
