@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dropdown Menu HTML/CSS/JS</title>
+    <title>Dropdown Menu</title>
 
 <style>
 :root {
@@ -45,7 +45,7 @@
 }
 
 /* ************************************************************************* */
-/* Some basic styles */
+/* Basic styles */
 html {
     scroll-behavior: smooth;
 }
@@ -66,7 +66,7 @@ h1 {
 }
 .ib-snippet-header,
 .ib-snippet-footer {
-    padding: 0 1em;
+    padding: 0;
 }
 .ib-snippet-header {
     border-bottom: 1px solid #ccc;
@@ -261,7 +261,7 @@ h1 {
 .ib-frm-prod-chosen-item__pipe {
     grid-column: 1/2;
     font-size: 0.8em;
-    line-height: 1em;
+    line-height: 1.2em;
     align-self: center;
     color: var(--ib-frm-inp-text-color);
 }
@@ -380,6 +380,20 @@ h1 {
     </header>
 
     <main class="ib-snippet-main">
+        <section class="ib-snippet-result">
+            <h2>Menu exemplo</h2>
+
+            <!--
+                This textarea will be hidden if browser has support to HTML template.
+                The drop-down menu with the list of chosen items will be inserted here.
+            -->
+            <textarea class="ib-frm-prod__textarea" name="" id="" cols="30" rows="10"></textarea>
+
+            <h3 style="font-weight: normal;margin:2em auto 0;">Texto no INPUT ou TEXTAREA oculto</h3>
+
+            <p style="margin-bottom: 5em; font-family: monospace; font-size:12px;border: 1px solid var(--ib-frm-border-color); padding: 8px;width: 100%;overflow: auto;background-color: #fff;" id="hidden-textarea-innertext-sample"></p>
+
+        </section>
         <section class="ib-snippet-desc">
             <p>
                 Fragmento de código HTML, CSS e JavaScript para ocultar e exibir uma lista como um menu drop-down.
@@ -410,345 +424,340 @@ h1 {
                 <li>Cada opção do menu pode conter mais elementos filhos com estilos de apresentação diversos.</li>
             </ul>
         </section>
-
-        <section class="ib-snippet-result">
-            <h2>Menu exemplo</h2>
-
-            <!--
-                This textarea will be hidden if browser has support to HTML template.
-                The drop-down menu with the list of chosen items will be inserted here.
-            -->
-            <textarea class="ib-frm-prod__textarea" name="" id="" cols="30" rows="10"></textarea>
-
-            <h3 style="font-weight: normal;margin:2em auto 0;">Texto no INPUT ou TEXTAREA oculto</h3>
-
-            <p style="margin-bottom: 5em; font-family: monospace; font-size:12px;border: 1px solid var(--ib-frm-border-color); padding: 8px;width: 100%;overflow: auto;background-color: #fff;" id="hidden-textarea-innertext-sample"></p>
-
-
-            <template id="ib-frm-prod__select-tpl">
-                <div class="ib-frm-prod__select">
-                    <button class="ib-frm-prod__select-btn">
-                        Adicionar itens na cotação...
-                    </button>
-
-                    <div class="ib-frm-prod__select-opts"></div>
-
-                    <div class="ib-frm-prod__chosen">
-                        <div class="ib-frm-prod__chosen-header"><span>Modelo</span><span>Quantidade</span></div>
-                        <div class="ib-frm-prod__chosen-msg">
-                            Toque no botão "Adicionar itens na cotação" para adicionar itens à sua cotação.
-                        </div>
-                        <div class="ib-frm-prod__chosen-body">
-                            <ul class="ib-frm-prod-chosen__list"></ul>
-                        </div>
-                    </div>
-                </div>
-            </template>
-            <template id="ib-frm-prod__select-opt-tpl">
-                <button class="ib-frm-prod__select-opt">
-                    <span class="ib-frm-prod__select-opt-model"></span>
-                    <span class="ib-frm-prod__select-opt-pump"></span>
-                    <span class="ib-frm-prod__select-opt-pipe"></span>
-                </button>
-            </template>
-            <template id="ib-frm-prod__chosen-item-tpl">
-                <li class="ib-frm-prod-chosen__item">
-                    <span class="ib-frm-prod-chosen-item__name"></span>
-                    <span class="ib-frm-prod-chosen-item__pump"></span>
-                    <span class="ib-frm-prod-chosen-item__pipe"></span>
-                    <span class="ib-frm-prod-chosen-item__qty"></span>
-                    <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
-                    <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
-                </li>
-            </template>
-
-            <template id="ib-frm-prod__chosen-eml-tbl-tpl">
-                <table border="0" cellspacing="0" cellpadding="4" width="100%"  style="font-family:verdana,arial,helv,sans-serif;color:#444444;">
-                    <thead>
-                        <tr>
-                            <th align="left" width="64">Quantidade</th>
-                            <th align="left">Modelo</th>
-                        </tr>
-                        <tr>
-                            <th colspan="2"><hr></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </template>
-
-            <template id="ib-frm-prod__chosen-eml-tbl-row-tpl">
-                <tr>
-                    <td align="center" style="font-size:24px;"></td>
-                    <td>
-                        <div style="font-size:18px;"></div>
-                        <div style="font-size:14px;"></div>
-                    </td>
-                </tr>
-                <tr><th colspan="2"><hr></th></tr>
-            </template>
-        </section>
     </main>
 
+    <footer class="ib-snippet-footer">
+        <p>
+            Repositório deste código:
+            <a href="https://github.com/iraja-baltezan/form-dropdown-list" style="display: block;margin-top: 1em;">
+                https://github.com/iraja-baltezan/form-dropdown-list
+            </a>
+        </p>
+    </footer>
 
 
-    <script>
-        function ibFrmQuotaProdSelectMain(){
-            // Test to see if the browser supports the HTML template element by checking
-            // for the presence of the template element's content attribute.
-            if (!('content' in document.createElement('template'))) return;
-
-            // Items to populate the options of menu.
-            var productsArray=[
-                ['KA-1',    'THS-18     3.0 cv',    'SUC 2”    REC 1½”'  ],
-                ['KA-2',    'THS-18     4.0 cv',    'SUC 2”    REC 1½”'  ],
-                ['KA-3',    'THS-18     5.0 cv',    'SUC 2”    REC 1½”'  ],
-                ['KA-4',    'THS-18     6.0 cv',    'SUC 2”    REC 1½”'  ],
-                ['KA-5',    'THS-18     7.5 cv',    'SUC 2”    REC 1½”'  ],
-                ['KA-6',    'THS-18    10.0 cv',    'SUC 2”    REC 1½”'  ],
-                ['KA-7',    'THS-18    12.5 cv',    'SUC 2”    REC 1½”'  ],
-                ['KA-8',    'THB-18    10.0 cv',    'SUC 3”    REC 2½”'  ],
-                ['KA-9',    'THB-18    12.5 cv',    'SUC 3”    REC 2½”'  ],
-                ['KA-10',   'THB-18    15.0 cv',    'SUC 3”    REC 2½”'  ],
-                ['KA-11',   'THB-18    20.0 cv',    'SUC 3”    REC 2½”'  ],
-                ['KA-26',   'TH-18      3,0 cv',    'SUC 2”    REC 2½”'  ],
-                ['KA-27',   'THS-18     5,0 cv',    'SUC 2”    REC 2½”'  ],
-                ['KA-28',   'THS-18     7,5 cv',    'SUC 2”    REC 2½”'  ],
-                ['KA-29',   'THS-18    10,0 cv',    'SUC 2”    REC 2½”'  ],
-                ['KR-1',    'B-12-NR    0,5 cv',    'SUC ¾”    REC ¾”'   ],
-                ['KR-2',    'TH-16-NR   1,0 cv',    'SUC 1”    REC 1”'   ],
-                ['KR-3',    'TH-16-NR   1,5 cv',    'SUC 1¼”   REC 1”'   ],
-                ['KR-4',    'TH-16-NR   2,0 cv',    'SUC 1¼”   REC 1”'   ],
-                ['KR-5',    'TH-16-NR   3,0 cv',    'SUC 1¼”   REC 1”'   ],
-                ['KR-6',    'THS-18-R   5,0 cv',    'SUC 2”    REC 1½”'  ],
-                ['KR-7',    'THS-18-R   7,5 cv',    'SUC 2”    REC 1½”'  ],
-                ['KR-8',    'THS-18-R  10,0 cv',    'SUC 2”    REC 1½”'  ],
-                ['PLUS-1',  'P-11/2     1,0 cv',    'SUC 1”    REC 1”'   ],
-                ['PLUS-2',  'P-11/3     1,5 cv',    'SUC 1”    REC 1”'   ],
-                ['PLUS-3',  'P-11/3     2,0 cv',    'SUC 1”    REC 1”'   ],
-                ['PLUS-4',  'P-11/4     3,0 cv',    'SUC 1”    REC 1”'   ],
-                ['PLUS-11', 'P-15/2-F   3,0 cv',    'SUC 1½”   REC 1½”'  ],
-                ['PLUS-12', 'P-15/2-K   4,0 cv',    'SUC 1½”   REC 1½”'  ],
-                ['PLUS-13', 'P-15/2-N   5,0 cv',    'SUC 1½”   REC 1½”'  ],
-                ['PLUS-14', 'P-15/3-K   6,0 cv',    'SUC 1½”   REC 1½”'  ],
-            ]
 
 
-            // Gets the templates and textarea element references
-            var tplSelect = document.getElementById('ib-frm-prod__select-tpl')
-            var tplSelectOpt = document.getElementById('ib-frm-prod__select-opt-tpl')
+<!--  Templates begin  -->
+<template id="ib-frm-prod__select-tpl">
+    <div class="ib-frm-prod__select">
+        <button class="ib-frm-prod__select-btn">
+            Adicionar itens na cotação...
+        </button>
 
-            // Hidden textarea for chosen items, formatted as an html table
-            // suitable for email clients.
-            // When visible, the user manually edit the content of textarea
-            // and the menu controls are not created.
-            var elmFrmTextArea = document.querySelector('.ib-frm-prod__textarea')
-            elmFrmTextArea.style.display = 'none'
+        <div class="ib-frm-prod__select-opts"></div>
 
-            // On clicking the button menu-sel
-            function onSelectBtnClick(event){
-                var btnTarget = event.currentTarget
-                btnTarget.parentElement.classList.toggle('ib-frm-prod__select--open')
+        <div class="ib-frm-prod__chosen">
+            <div class="ib-frm-prod__chosen-header"><span>Modelo</span><span>Quantidade</span></div>
+            <div class="ib-frm-prod__chosen-msg">
+                Toque no botão "Adicionar itens na cotação" para adicionar itens à sua cotação.
+            </div>
+            <div class="ib-frm-prod__chosen-body">
+                <ul class="ib-frm-prod-chosen__list"></ul>
+            </div>
+        </div>
+    </div>
+</template>
+<template id="ib-frm-prod__select-opt-tpl">
+    <button class="ib-frm-prod__select-opt">
+        <span class="ib-frm-prod__select-opt-model"></span>
+        <span class="ib-frm-prod__select-opt-pump"></span>
+        <span class="ib-frm-prod__select-opt-pipe"></span>
+    </button>
+</template>
+<template id="ib-frm-prod__chosen-item-tpl">
+    <li class="ib-frm-prod-chosen__item">
+        <span class="ib-frm-prod-chosen-item__name"></span>
+        <span class="ib-frm-prod-chosen-item__pump"></span>
+        <span class="ib-frm-prod-chosen-item__pipe"></span>
+        <span class="ib-frm-prod-chosen-item__qty"></span>
+        <input class="ib-frm-prod-chosen-item__qty-plus" type="button" value="+"/>
+        <input class="ib-frm-prod-chosen-item__qty-minus" type="button" value="-"/>
+    </li>
+</template>
+
+<template id="ib-frm-prod__chosen-eml-tbl-tpl">
+    <table border="0" cellspacing="0" cellpadding="4" width="100%"  style="font-family:verdana,arial,helv,sans-serif;color:#444444;">
+        <thead>
+            <tr>
+                <th align="left" width="64">Quantidade</th>
+                <th align="left">Modelo</th>
+            </tr>
+            <tr>
+                <th colspan="2"><hr></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</template>
+
+<template id="ib-frm-prod__chosen-eml-tbl-row-tpl">
+    <tr>
+        <td align="center" style="font-size:24px;"></td>
+        <td>
+            <div style="font-size:18px;"></div>
+            <div style="font-size:14px;"></div>
+        </td>
+    </tr>
+    <tr><th colspan="2"><hr></th></tr>
+</template>
+
+<!--  Templates end  -->
+
+<script>
+    function ibFrmQuotaProdSelectMain(){
+        // Test to see if the browser supports the HTML template element by checking
+        // for the presence of the template element's content attribute.
+        if (!('content' in document.createElement('template'))) return;
+
+        // Items to populate the options of menu.
+        var productsArray=[
+            ['KA-1',    'THS-18     3.0 cv',    'SUC 2”    REC 1½”'  ],
+            ['KA-2',    'THS-18     4.0 cv',    'SUC 2”    REC 1½”'  ],
+            ['KA-3',    'THS-18     5.0 cv',    'SUC 2”    REC 1½”'  ],
+            ['KA-4',    'THS-18     6.0 cv',    'SUC 2”    REC 1½”'  ],
+            ['KA-5',    'THS-18     7.5 cv',    'SUC 2”    REC 1½”'  ],
+            ['KA-6',    'THS-18    10.0 cv',    'SUC 2”    REC 1½”'  ],
+            ['KA-7',    'THS-18    12.5 cv',    'SUC 2”    REC 1½”'  ],
+            ['KA-8',    'THB-18    10.0 cv',    'SUC 3”    REC 2½”'  ],
+            ['KA-9',    'THB-18    12.5 cv',    'SUC 3”    REC 2½”'  ],
+            ['KA-10',   'THB-18    15.0 cv',    'SUC 3”    REC 2½”'  ],
+            ['KA-11',   'THB-18    20.0 cv',    'SUC 3”    REC 2½”'  ],
+            ['KA-26',   'TH-18      3,0 cv',    'SUC 2”    REC 2½”'  ],
+            ['KA-27',   'THS-18     5,0 cv',    'SUC 2”    REC 2½”'  ],
+            ['KA-28',   'THS-18     7,5 cv',    'SUC 2”    REC 2½”'  ],
+            ['KA-29',   'THS-18    10,0 cv',    'SUC 2”    REC 2½”'  ],
+            ['KR-1',    'B-12-NR    0,5 cv',    'SUC ¾”    REC ¾”'   ],
+            ['KR-2',    'TH-16-NR   1,0 cv',    'SUC 1”    REC 1”'   ],
+            ['KR-3',    'TH-16-NR   1,5 cv',    'SUC 1¼”   REC 1”'   ],
+            ['KR-4',    'TH-16-NR   2,0 cv',    'SUC 1¼”   REC 1”'   ],
+            ['KR-5',    'TH-16-NR   3,0 cv',    'SUC 1¼”   REC 1”'   ],
+            ['KR-6',    'THS-18-R   5,0 cv',    'SUC 2”    REC 1½”'  ],
+            ['KR-7',    'THS-18-R   7,5 cv',    'SUC 2”    REC 1½”'  ],
+            ['KR-8',    'THS-18-R  10,0 cv',    'SUC 2”    REC 1½”'  ],
+            ['PLUS-1',  'P-11/2     1,0 cv',    'SUC 1”    REC 1”'   ],
+            ['PLUS-2',  'P-11/3     1,5 cv',    'SUC 1”    REC 1”'   ],
+            ['PLUS-3',  'P-11/3     2,0 cv',    'SUC 1”    REC 1”'   ],
+            ['PLUS-4',  'P-11/4     3,0 cv',    'SUC 1”    REC 1”'   ],
+            ['PLUS-11', 'P-15/2-F   3,0 cv',    'SUC 1½”   REC 1½”'  ],
+            ['PLUS-12', 'P-15/2-K   4,0 cv',    'SUC 1½”   REC 1½”'  ],
+            ['PLUS-13', 'P-15/2-N   5,0 cv',    'SUC 1½”   REC 1½”'  ],
+            ['PLUS-14', 'P-15/3-K   6,0 cv',    'SUC 1½”   REC 1½”'  ],
+        ]
+
+
+        // Gets the templates and textarea element references
+        var tplSelect = document.getElementById('ib-frm-prod__select-tpl')
+        var tplSelectOpt = document.getElementById('ib-frm-prod__select-opt-tpl')
+
+        // Hidden textarea for chosen items, formatted as an html table
+        // suitable for email clients.
+        // When visible, the user manually edit the content of textarea
+        // and the menu controls are not created.
+        var elmFrmTextArea = document.querySelector('.ib-frm-prod__textarea')
+        elmFrmTextArea.style.display = 'none'
+
+        // On clicking the button menu-sel
+        function onSelectBtnClick(event){
+            event.preventDefault()
+            var btnTarget = event.currentTarget
+            btnTarget.parentElement.classList.toggle('ib-frm-prod__select--open')
+        }
+
+        // On clicking an option...
+        function onSelectOptClick(event){
+            event.preventDefault()
+            var optTarget = event.currentTarget
+            var idx = optTarget.dataset.idx
+            optTarget.parentElement.parentElement.classList.toggle('ib-frm-prod__select--open')
+            chosenItemAdd(idx)
+        }
+
+        // Keyboard events
+        function onSelectKeyDown(event){
+            switch(event.code){
+                case 'ArrowDown':
+                    event.preventDefault()
+                    event.currentTarget.classList.add('ib-frm-prod__select--open')
+                    selectSetFocus(event.currentTarget, true)
+                    break
+                case 'ArrowUp':
+                    event.preventDefault()
+                    event.currentTarget.classList.add('ib-frm-prod__select--open')
+                    selectSetFocus(event.currentTarget, false)
+                    break
+                case 'Escape':
+                    event.preventDefault()
+                    event.currentTarget.classList.remove('ib-frm-prod__select--open')
             }
+        }
 
-            // On clicking an option...
-            function onSelectOptClick(event){
-                var optTarget = event.currentTarget
-                var idx = optTarget.dataset.idx
-                optTarget.parentElement.parentElement.classList.toggle('ib-frm-prod__select--open')
-                chosenItemAdd(idx)
-            }
+        function selectSetFocus(target, goNext){
+            var elmFocused = document.activeElement
+            var optionsButtons = target.querySelectorAll('.ib-frm-prod__select-opt')
 
-            // Keyboard events
-            function onSelectKeyDown(event){
-                switch(event.code){
-                    case 'ArrowDown':
-                        event.preventDefault()
-                        event.currentTarget.classList.add('ib-frm-prod__select--open')
-                        selectSetFocus(event.currentTarget, true)
-                        break
-                    case 'ArrowUp':
-                        event.preventDefault()
-                        selectSetFocus(event.currentTarget, false)
-                        break
-                    case 'Escape':
-                        event.preventDefault()
-                        event.currentTarget.classList.remove('ib-frm-prod__select--open')
-                }
-            }
-
-            function selectSetFocus(target, goNext){
-                var elmFocused = document.activeElement
-                var optionsButtons = target.querySelectorAll('.ib-frm-prod__select-opt')
-
-                if (target.contains(elmFocused)){
-                    if (!elmFocused.classList.contains('ib-frm-prod__select-opt')){
-                        optionsButtons[(goNext? 0: optionsButtons.length-1)].focus()
-                    }
-                    else {
-                        if (goNext) {
-                            if (elmFocused.nextElementSibling){
-                                elmFocused.nextElementSibling.focus()
-                            }
-                            else {
-                                optionsButtons[0].focus()
-                            }
-                        }
-                        else {
-                            if (elmFocused.previousElementSibling){
-                                elmFocused.previousElementSibling.focus()
-                            }
-                            else {
-                                optionsButtons[optionsButtons.length-1].focus()
-                            }
-                        }
-                    }
-                }
-            }
-
-
-
-            // Get node cloned from product selector component template
-            var cloneSelect = tplSelect.content.firstElementChild.cloneNode(true)
-
-
-            // Insert the selector component node before textarea and get the element
-            var elmSelect = elmFrmTextArea.parentElement.insertBefore(cloneSelect, elmFrmTextArea)
-
-            elmSelect.querySelector('.ib-frm-prod__select-btn').addEventListener('click', onSelectBtnClick, false)
-            elmSelect.addEventListener('keydown', onSelectKeyDown, false)
-
-            // Get the container for options of select menu
-            var elmSelectOpts = elmSelect.getElementsByClassName('ib-frm-prod__select-opts')[0]
-
-            // Populate the menu options
-            // Get the option element from template
-            var elmTplSelectOpt = tplSelectOpt.content.firstElementChild
-
-            for (var i=0; i<30; i++){
-                var opt = elmTplSelectOpt.cloneNode(true)
-                opt.addEventListener('click', onSelectOptClick, false)
-                opt.dataset.idx = i
-                opt.querySelector('.ib-frm-prod__select-opt-model').innerText = productsArray[i][0]
-                opt.querySelector('.ib-frm-prod__select-opt-pump').innerText = productsArray[i][1]
-                opt.querySelector('.ib-frm-prod__select-opt-pipe').innerText = productsArray[i][2]
-                opt.tabIndex = -1
-                elmSelectOpts.appendChild(opt)
-            }
-
-            //-----------------------------------------------------------------
-            // The Chosen items
-
-            // Array of chosen quantities
-            var chosenItemQtyArray = []
-
-            // Templates
-            var tplChosenItem = document.getElementById('ib-frm-prod__chosen-item-tpl')
-            var tplChosenEmlTbl = document.getElementById('ib-frm-prod__chosen-eml-tbl-tpl')
-            var tplChosenEmlTblRow = document.getElementById('ib-frm-prod__chosen-eml-tbl-row-tpl')
-
-
-            // Containers of chosen items
-            var elmChosen = document.querySelector('.ib-frm-prod__chosen')
-            var elmChosenList = elmChosen.querySelector('.ib-frm-prod-chosen__list')
-            var elmTplChosenEmlTbl = tplChosenEmlTbl.content //.firstElementChild
-            var elmTplChosenEmlTblBody = elmTplChosenEmlTbl.querySelector('tbody')
-
-
-            // Refresh the content of chosen items lists
-            // TODO: Keep focus on buttons after refreshing
-            function chosenItemsRefresh(){
-                // Clear the visible list
-                elmChosenList.innerHTML=''
-
-                // Clear the hidden list
-                elmTplChosenEmlTblBody.innerHTML = ''
-                elmFrmTextArea.innerHTML=''
-
-                // Sum of all quantities
-                var qtySum = (chosenItemQtyArray.length<1? 0 : chosenItemQtyArray.reduce((previousVal, currentVal) => previousVal+currentVal))
-                if (qtySum < 1){
-                    // Show empty list message
-                    elmChosen.classList.add('ib-frm-prod__chosen--empty')
-                    elmFrmTextArea.innerHTML=''
+            if (target.contains(elmFocused)){
+                if (!elmFocused.classList.contains('ib-frm-prod__select-opt')){
+                    optionsButtons[(goNext? 0: optionsButtons.length-1)].focus()
                 }
                 else {
-                    elmChosen.classList.remove('ib-frm-prod__chosen--empty')
-
-                    var elmTplChosenItem = tplChosenItem.content.firstElementChild
-                    var elmTplChosenEmlTblRow = tplChosenEmlTblRow.content
-
-
-                    for(var i=0; i<chosenItemQtyArray.length; i++){
-                        var qty = chosenItemQtyArray[i]
-                        if(!qty) continue
-
-                        // Insert chosen item on visible list
-                        var item = elmTplChosenItem.cloneNode(true)
-                        item.dataset.idx = i
-                        item.querySelector('.ib-frm-prod-chosen-item__name').innerText = productsArray[i][0]
-                        item.querySelector('.ib-frm-prod-chosen-item__pump').innerHTML = productsArray[i][1]
-                        item.querySelector('.ib-frm-prod-chosen-item__pipe').innerHTML = productsArray[i][2]
-                        item.querySelector('.ib-frm-prod-chosen-item__qty').innerHTML = `${qty}<u>UNIDADE${qty > 1 ? 'S' : ''}</u>`
-                        item.querySelector('.ib-frm-prod-chosen-item__qty-plus').dataset.idx = i
-                        item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener('click', onChosenItemAddBtnClick)
-                        item.querySelector('.ib-frm-prod-chosen-item__qty-minus').dataset.idx = i
-                        item.querySelector('.ib-frm-prod-chosen-item__qty-minus').addEventListener('click', onChosenItemDelBtnClick)
-                        elmChosenList.appendChild(item)
-
-                        // Insert chosen item on (table) list
-                        var row = elmTplChosenEmlTblRow.cloneNode(true)
-                        row.querySelector('tr td').innerText = qty
-                        row.querySelector('div').innerText = productsArray[i][0]
-                        row.querySelectorAll('div')[1].innerHTML = productsArray[i][1] + '<br />' + productsArray[i][2]
-                        elmTplChosenEmlTblBody.appendChild(row)
+                    if (goNext) {
+                        if (elmFocused.nextElementSibling){
+                            elmFocused.nextElementSibling.focus()
+                        }
+                        else {
+                            optionsButtons[0].focus()
+                        }
                     }
+                    else {
+                        if (elmFocused.previousElementSibling){
+                            elmFocused.previousElementSibling.focus()
+                        }
+                        else {
+                            optionsButtons[optionsButtons.length-1].focus()
+                        }
+                    }
+                }
+            }
+        }
 
-                    // Inserts the chosen (table) list on hidden textarea field to be sent by e-mail message later
-                    elmFrmTextArea.innerText = elmTplChosenEmlTbl.firstElementChild.outerHTML
 
+        // Get node cloned from product selector component template
+        var cloneSelect = tplSelect.content.firstElementChild.cloneNode(true)
+
+
+        // Insert the selector component node before textarea and get the element
+        var elmSelect = elmFrmTextArea.parentElement.insertBefore(cloneSelect, elmFrmTextArea)
+
+        elmSelect.querySelector('.ib-frm-prod__select-btn').addEventListener('click', onSelectBtnClick, false)
+        elmSelect.addEventListener('keydown', onSelectKeyDown, false)
+
+        // Get the container for options of select menu
+        var elmSelectOpts = elmSelect.getElementsByClassName('ib-frm-prod__select-opts')[0]
+
+        // Populate the menu options
+        // Get the option element from template
+        var elmTplSelectOpt = tplSelectOpt.content.firstElementChild
+
+        for (var i=0; i<30; i++){
+            var opt = elmTplSelectOpt.cloneNode(true)
+            opt.addEventListener('click', onSelectOptClick, false)
+            opt.dataset.idx = i
+            opt.querySelector('.ib-frm-prod__select-opt-model').innerText = productsArray[i][0]
+            opt.querySelector('.ib-frm-prod__select-opt-pump').innerText = productsArray[i][1]
+            opt.querySelector('.ib-frm-prod__select-opt-pipe').innerText = productsArray[i][2]
+            opt.tabIndex = -1
+            elmSelectOpts.appendChild(opt)
+        }
+
+        //-----------------------------------------------------------------
+        // The Chosen items
+
+        // Array of chosen quantities
+        var chosenItemQtyArray = []
+
+        // Templates
+        var tplChosenItem = document.getElementById('ib-frm-prod__chosen-item-tpl')
+        var tplChosenEmlTbl = document.getElementById('ib-frm-prod__chosen-eml-tbl-tpl')
+        var tplChosenEmlTblRow = document.getElementById('ib-frm-prod__chosen-eml-tbl-row-tpl')
+
+
+        // Containers of chosen items
+        var elmChosen = document.querySelector('.ib-frm-prod__chosen')
+        var elmChosenList = elmChosen.querySelector('.ib-frm-prod-chosen__list')
+        var elmTplChosenEmlTbl = tplChosenEmlTbl.content //.firstElementChild
+        var elmTplChosenEmlTblBody = elmTplChosenEmlTbl.querySelector('tbody')
+
+
+        // Refresh the content of chosen items lists
+        // TODO: Keep focus on buttons after refreshing
+        function chosenItemsRefresh(){
+            // Clear the visible list
+            elmChosenList.innerHTML=''
+
+            // Clear the hidden list
+            elmTplChosenEmlTblBody.innerHTML = ''
+            elmFrmTextArea.innerHTML=''
+
+            // Sum of all quantities
+            var qtySum = (chosenItemQtyArray.length<1? 0 : chosenItemQtyArray.reduce((previousVal, currentVal) => previousVal+currentVal))
+            if (qtySum < 1){
+                // Show empty list message
+                elmChosen.classList.add('ib-frm-prod__chosen--empty')
+                elmFrmTextArea.innerHTML=''
+            }
+            else {
+                elmChosen.classList.remove('ib-frm-prod__chosen--empty')
+
+                var elmTplChosenItem = tplChosenItem.content.firstElementChild
+                var elmTplChosenEmlTblRow = tplChosenEmlTblRow.content
+
+
+                for(var i=0; i<chosenItemQtyArray.length; i++){
+                    var qty = chosenItemQtyArray[i]
+                    if(!qty) continue
+
+                    // Insert chosen item on visible list
+                    var item = elmTplChosenItem.cloneNode(true)
+                    item.dataset.idx = i
+                    item.querySelector('.ib-frm-prod-chosen-item__name').innerText = productsArray[i][0]
+                    item.querySelector('.ib-frm-prod-chosen-item__pump').innerHTML = productsArray[i][1]
+                    item.querySelector('.ib-frm-prod-chosen-item__pipe').innerHTML = productsArray[i][2]
+                    item.querySelector('.ib-frm-prod-chosen-item__qty').innerHTML = `${qty}<u>UNIDADE${qty > 1 ? 'S' : ''}</u>`
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-plus').dataset.idx = i
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-plus').addEventListener('click', onChosenItemAddBtnClick)
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-minus').dataset.idx = i
+                    item.querySelector('.ib-frm-prod-chosen-item__qty-minus').addEventListener('click', onChosenItemDelBtnClick)
+                    elmChosenList.appendChild(item)
+
+                    // Insert chosen item on (table) list
+                    var row = elmTplChosenEmlTblRow.cloneNode(true)
+                    row.querySelector('tr td').innerText = qty
+                    row.querySelector('div').innerText = productsArray[i][0]
+                    row.querySelectorAll('div')[1].innerHTML = productsArray[i][1] + '<br />' + productsArray[i][2]
+                    elmTplChosenEmlTblBody.appendChild(row)
                 }
 
-                // TODO Remove this code in production (begin)
-                document.getElementById('hidden-textarea-innertext-sample').innerText = elmFrmTextArea.innerText
-                // TODO Remove this code in production (end)
+                // Inserts the chosen (table) list on hidden textarea field to be sent by e-mail message later
+                elmFrmTextArea.innerText = elmTplChosenEmlTbl.firstElementChild.outerHTML
+
             }
 
-            function chosenItemAdd(itemIndex){
-                var currentQty = chosenItemQtyArray[itemIndex]
-                chosenItemQtyArray[itemIndex] = (currentQty?currentQty:0) + 1
-                chosenItemsRefresh()
-            }
-
-            function chosenItemDel(itemIndex){
-                var currentQty = chosenItemQtyArray[itemIndex]
-                chosenItemQtyArray[itemIndex] = (currentQty?currentQty:0) - 1
-                chosenItemsRefresh()
-            }
-
-            function onChosenItemAddBtnClick(event){
-                chosenItemAdd(event.currentTarget.dataset.idx)
-            }
-
-            function onChosenItemDelBtnClick(event){
-                chosenItemDel(event.currentTarget.dataset.idx)
-            }
-
-            chosenItemsRefresh()
-
+            // TODO Remove this code in production (begin)
+            document.getElementById('hidden-textarea-innertext-sample').innerText = elmFrmTextArea.innerText
+            // TODO Remove this code in production (end)
         }
-        document.addEventListener('DOMContentLoaded', ibFrmQuotaProdSelectMain)
-    </script>
 
-<footer class="ib-snippet-footer">
-    <p>
-        Repositório deste código:
-        <a href="https://github.com/iraja-baltezan/form-dropdown-list" style="display: block;margin-top: 1em;">
-            https://github.com/iraja-baltezan/form-dropdown-list
-        </a>
-    </p>
-</footer>
+        function chosenItemAdd(itemIndex){
+            var currentQty = chosenItemQtyArray[itemIndex]
+            chosenItemQtyArray[itemIndex] = (currentQty?currentQty:0) + 1
+            chosenItemsRefresh()
+        }
+
+        function chosenItemDel(itemIndex){
+            var currentQty = chosenItemQtyArray[itemIndex]
+            chosenItemQtyArray[itemIndex] = (currentQty?currentQty:0) - 1
+            chosenItemsRefresh()
+        }
+
+        function onChosenItemAddBtnClick(event){
+            event.preventDefault()
+            chosenItemAdd(event.currentTarget.dataset.idx)
+        }
+
+        function onChosenItemDelBtnClick(event){
+            event.preventDefault()
+            chosenItemDel(event.currentTarget.dataset.idx)
+        }
+
+        chosenItemsRefresh()
+
+    }
+    document.addEventListener('DOMContentLoaded', ibFrmQuotaProdSelectMain)
+</script>
+
+
 
 
 </body>
